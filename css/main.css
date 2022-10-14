@@ -1,0 +1,78 @@
+@font-face {
+    font-family: "JosefinSans Regular";
+    src: url('../fonts/JosefinSans-Regular.ttf');
+    src: url('../fonts/JosefinSans-Regular.woff');
+    src: url('../fonts/JosefinSans-Regular.woff2');
+}
+
+@font-face {
+    font-family: "JosefinSans Medium";
+    src: url('../fonts/JosefinSans-Medium.ttf');
+    src: url('../fonts/JosefinSans-Medium.woff');
+    src: url('../fonts/JosefinSans-Medium.woff2');
+}
+
+@font-face {
+    font-family: "JosefinSans Bold";
+    src: url('../fonts/JosefinSans-Bold.ttf');
+    src: url('../fonts/JosefinSans-Bold.woff');
+    src: url('../fonts/JosefinSans-Bold.woff2');
+}
+
+html {
+    background-color: #1B1F27;
+}
+
+h1 {
+    font-size: 200px !important;
+    font-family: JosefinSans Bold;
+    color: #fff;
+}
+
+h3 {
+    font-size: 32px !important;
+    font-family: JosefinSans Regular;
+    color: #fff;
+}
+
+.omni-o img {
+    width: 155px !important;
+    margin-right: 13px;
+}
+
+#web-desc h1 {
+    margin: 0;
+}
+
+#web-desc h3 {
+    margin: 0;
+    width: 100%;
+    max-width: 700px;
+    text-align: center;
+}
+
+#web-desc {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#web-desc a {
+    text-decoration: none;
+    color: #1b1f27;
+    font-family: JosefinSans Medium;
+    font-size: 24px;
+    padding: 14px 25px;
+    border-radius: 10px;
+    background: #ECD254;
+    cursor: pointer;
+    margin-top: 30px;
+}
+
+main#start-page {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
