@@ -76,3 +76,14 @@ main#start-page {
     align-items: center;
     justify-content: center;
 }
+
+.flex {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.flex a:not(:last-child) {
+    margin-right: 30px;
+}

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="styles.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+        <script>
+            function search() {
+                let query = $("#search").val();
+                // http://omnimusic.co:3000/search
+                $.get("http://localhost:3000/search", {q: query}, function ( response ) {
+                    let firstArtist = response[0];
+                    $("#searchedArtist").html(firstArtist['name']);
+                    $("#searchedArtistID").html(firstArtist['id']);
+                });
+            }
+        </script>
+    </head>
+    <body>
+        <!-- <script src="app.js" async defer></script> -->
+        
+        <!-- <form id="artistSearchForm" method="GET" action=""> -->
+            <!-- <field> -->
+                <label for="search">Search for an artist</label>
+                <input type="text" id="search" name="search">
+                <button type="submit" id="submit" onclick="search()">Search</button>
+            <!-- </field> -->
+        <!-- </form> -->
+        <div id="artistResults">
+            <div class="flexArtistInfo">
+                <h3>The artist you searched for is: </h3>
+                <h3 id="searchedArtist"></h3>
+            </div>
+            <div class="flexArtistInfo">
+                <h3>The ID of the artist you searched for is: </h3>
+                <h3 id="searchedArtistID"></h3>
+            </div>
+        </div>
+    </body>
+</html>
