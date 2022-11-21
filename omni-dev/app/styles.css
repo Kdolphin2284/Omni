@@ -1,5 +1,14 @@
+html {
+    min-height: 100vh;
+    max-height: 100vh;
+    background: radial-gradient(circle at center, #0E3562, #030316 100%);
+}
+a {
+    text-decoration: none;
+    display: inline-block;
+}
 body {
-    background-color: #282828;
+    background-color: transparent;
     color: #fff;
     margin: 0 auto;
     margin-top: 50px;
@@ -8,7 +17,7 @@ body {
     line-height: 1.5em;
 }
 header.navigation {
-    background-color: #333;
+    background-color: transparent;
     font-family: "Helvetica Neue", "Helvetica", "Roboto", "Arial", sans-serif;
     height: 50px;
     width: 100%;
@@ -62,15 +71,32 @@ button {
 }
 h1 {
     padding-top: 20px;
+    background-image: linear-gradient(140deg, #F7CA47, #C28000);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent; 
+    -moz-background-clip: text;
+    -moz-text-fill-color: transparent;
+    line-height: initial;
+    width: min-content;
+    margin: 0 auto;
+    font-size: 100px;
+}
+#submit {
+    display: none;
+}
+#query {
+    width: 500px !important;
+    padding-left: 20px;
 }
 svg {
     margin: 0 auto;
     display: block;
-    background-color: #282828;
+    background-color: transparent;
 }
 #uri {
     display: block;
-    color:#2AB759;
+    color:#F7CA47;
     cursor: pointer;
     font-size: 25px;
     margin: 15px auto;
@@ -94,7 +120,7 @@ svg {
     stroke-width: 4px;
 }
 .nodes circle {
-    stroke: #2AB759;
+    stroke: #F7CA47;
     stroke-width: 3px;
 }
 .nodes circle:hover {

@@ -78,7 +78,7 @@ function spotifyCallback(req, res) {
             console.log(USER_DATA_MAP[state]);
             console.log(userData);
             // console.log(USER_DATA_MAP);
-			res.redirect("https://omnimusic.co/omni-dev/app/index.html?state=" + state);
+			res.redirect("https://omnimusic.co/omni-dev/app/index.php?state=" + state);
 		});
 	}
 }

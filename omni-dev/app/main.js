@@ -228,6 +228,31 @@ function drawGraph(graph){
     }
 }
 
+// Added Code
+// const uriCheck = document.getElementById('uri');
+
+// function OmniLogoPlacement() {
+//     console.log($("#uri").html().length);
+//     if (uriCheck.innerHTML.trim() === '' ) {
+//         console.log('empty innerhtml');
+//     } else {
+//         console.log('full innerhtml: ' + uriCheck);
+//     }
+// }
+
+const OmniLogo = document.getElementById('OmniLogo');
+
+function OmniLogoPlacement() {
+    OmniLogo.style.position = "absolute";
+    OmniLogo.style.top = "0";
+    OmniLogo.style.left = "0";
+    OmniLogo.style.padding = "30px 0 0 30px";
+    OmniLogo.style.fontSize = "34px";
+}
+
+
+// End Added Code
+
 function visuify(){
     $("svg").empty();
     $("#message").empty();
@@ -243,4 +268,5 @@ function visuify(){
 $("#submit").on("click", function(e) {
     e.preventDefault();
     visuify();
+    OmniLogoPlacement();
 });
