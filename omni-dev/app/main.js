@@ -86,41 +86,41 @@ function getFirstDegreeArtists(response) {
         .then(function(response) { return response.artists; }));
 }
 
-function getSecondDegreeArtists(firstDegreeGraph, firstDegreeArtists) {
-    var deferreds = [$.when(firstDegreeGraph)];
-    firstDegreeArtists.forEach(function(firstDegreeArtist) {
-        var artistDeferred = $.Deferred();
-        deferreds.push(artistDeferred);
+// function getSecondDegreeArtists(firstDegreeGraph, firstDegreeArtists) {
+//     var deferreds = [$.when(firstDegreeGraph)];
+//     firstDegreeArtists.forEach(function(firstDegreeArtist) {
+//         var artistDeferred = $.Deferred();
+//         deferreds.push(artistDeferred);
 
-        getRelatedArtists(firstDegreeArtist.id)
-            .then(function(response) {
-                var firstDegreeArtistItem = {};
-                firstDegreeArtistItem[firstDegreeArtist.name] = response.artists;
-                artistDeferred.resolve(firstDegreeArtistItem);
-            })
-    });
+//         getRelatedArtists(firstDegreeArtist.id)
+//             .then(function(response) {
+//                 var firstDegreeArtistItem = {};
+//                 firstDegreeArtistItem[firstDegreeArtist.name] = response.artists;
+//                 artistDeferred.resolve(firstDegreeArtistItem);
+//             })
+//     });
 
-    return $.when.apply(null, deferreds);
-}
+//     return $.when.apply(null, deferreds);
+// }
 
 function buildFirstGraph(originalArtist, firstDegreeArtists) {
     return $.when(buildGraph(originalArtist, firstDegreeArtists), firstDegreeArtists);
 }
 
-function buildUpdatedGraph(firstDegreeGraph) {
-    var updatedGraph = firstDegreeGraph;
-    var firstDegreeArtistsMap = Array.prototype.slice.call(arguments, 1);
+// function buildUpdatedGraph(firstDegreeGraph) {
+//     var updatedGraph = firstDegreeGraph;
+//     var firstDegreeArtistsMap = Array.prototype.slice.call(arguments, 1);
 
-    firstDegreeArtistsMap.forEach(function(secondDegreeArtists, i) {
-        updatedGraph = buildGraph(
-            { name: Object.keys(secondDegreeArtists)[0] },
-            secondDegreeArtists[Object.keys(secondDegreeArtists)[0]],
-            firstDegreeGraph
-        );
-    });
+//     firstDegreeArtistsMap.forEach(function(secondDegreeArtists, i) {
+//         updatedGraph = buildGraph(
+//             { name: Object.keys(secondDegreeArtists)[0] },
+//             secondDegreeArtists[Object.keys(secondDegreeArtists)[0]],
+//             firstDegreeGraph
+//         );
+//     });
 
-    return updatedGraph;
-}
+//     return updatedGraph;
+// }
 function drawGraph(graph){
     graph.nodes = _.uniqBy(graph.nodes, "id");
     var svg = d3.select("svg"),
@@ -129,7 +129,8 @@ function drawGraph(graph){
 
     var simulation = d3.forceSimulation()
         .force("link", d3.forceLink().id(function(d) { return d.id; }))
-        .force("charge", d3.forceManyBody().strength(-100))
+        // .force("charge", d3.forceManyBody().strength(-100))
+        .force("charge", d3.forceManyBody().strength(-20000))
         .force("center", d3.forceCenter(width / 2, height / 2.5));
 
     var div = d3.select("body").append("div")
@@ -156,15 +157,17 @@ function drawGraph(graph){
                 .style("opacity", 0);
         });
 
+        // d3.select("circle").style("r", "30");
+
     var node = svg.append("g")
         .attr("class", "nodes")
         .selectAll("circle")
         .data(graph.nodes)
         .enter().append("circle")
-        .attr("r", 8)
+        .attr("r", 128)
         .attr("fill", "#12121")
         .on("mouseover", function(d) {
-            d3.select(this).transition().duration(200).attr("r", 14)
+            d3.select(this).transition().duration(200).attr("r", 160)
             div.transition()
                 .duration(200)
                 .style("opacity", .9)
@@ -173,7 +176,7 @@ function drawGraph(graph){
                 .style("top", (d3.event.pageY - 28) + "px");
         })
         .on("mouseout", function(d) {
-            d3.select(this).transition().duration(200).attr("r", 8)
+            d3.select(this).transition().duration(200).attr("r", 128)
             div.transition()
                 .duration(500)
                 .style("opacity", 0);
@@ -241,6 +244,7 @@ function drawGraph(graph){
 // }
 
 const OmniLogo = document.getElementById('OmniLogo');
+const uriPadding = document.getElementById('uri');
 
 function OmniLogoPlacement() {
     OmniLogo.style.position = "absolute";
@@ -248,8 +252,9 @@ function OmniLogoPlacement() {
     OmniLogo.style.left = "0";
     OmniLogo.style.padding = "30px 0 0 30px";
     OmniLogo.style.fontSize = "34px";
+    uri.style.padding = "10px";
+    uri.style.background = "#000";
 }
-
 
 // End Added Code
 
@@ -260,8 +265,8 @@ function visuify(){
     getArtist($("#query").val())
         .then(getFirstDegreeArtists)
         .then(buildFirstGraph)
-        .then(getSecondDegreeArtists)
-        .then(buildUpdatedGraph)
+        // .then(getSecondDegreeArtists)
+        // .then(buildUpdatedGraph)
         .then(drawGraph);
 }
 
@@ -270,3 +275,6 @@ $("#submit").on("click", function(e) {
     visuify();
     OmniLogoPlacement();
 });
+
+
+// 263, 264, 110, 89 (second degree artist information commented out starting on these 4 lines)
