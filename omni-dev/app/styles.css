@@ -1,7 +1,30 @@
+@font-face {
+    font-family: "JosefinSans Regular";
+    src: url('fonts/JosefinSans-Regular.ttf');
+    src: url('fonts/JosefinSans-Regular.woff');
+    src: url('fonts/JosefinSans-Regular.woff2');
+}
+
+@font-face {
+    font-family: "JosefinSans Medium";
+    src: url('fonts/JosefinSans-Medium.ttf');
+    src: url('fonts/JosefinSans-Medium.woff');
+    src: url('fonts/JosefinSans-Medium.woff2');
+}
+
+@font-face {
+    font-family: "JosefinSans Bold";
+    src: url('fonts/JosefinSans-Bold.ttf');
+    src: url('fonts/JosefinSans-Bold.woff');
+    src: url('fonts/JosefinSans-Bold.woff2');
+}
 html {
     min-height: 100vh;
     max-height: 100vh;
     background: radial-gradient(circle at center, #0E3562, #030316 100%);
+}
+* {
+    font-family: JosefinSans Regular;
 }
 a {
     text-decoration: none;
@@ -70,6 +93,7 @@ button {
     cursor: pointer;
 }
 h1 {
+    font-family: JosefinSans Bold;
     padding-top: 20px;
     background-image: linear-gradient(140deg, #F7CA47, #C28000);
     background-clip: text;
@@ -142,6 +166,14 @@ div.tooltip {
     border: 0px;
     border-radius: 5px;
     pointer-events: none;
+}
+#home-element-1,
+#home-element-2,
+#home-element-3,
+#home-element-4 {
+    position: relative;
+    top: 20vh;
+    z-index: 1000;
 }
 
 svg:not(:root) {

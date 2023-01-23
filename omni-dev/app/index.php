@@ -11,13 +11,11 @@
     <!-- <header class="navigation"> -->
       <!-- <a href="/">Omni</a> -->
     <!-- </header> -->
-    <a href="/">
+    <a href="/" id="home-element-1">
         <h1 id="OmniLogo">Omni</h1>
     </a>
-    <h3>A music discovery app based around the relational similarity between artists.</h3>
-    <em>Hover, drag, and click the nodes and links!</em>
-    <form>
-        <input type="text" id="query" placeholder="Search for an artists to discover similar artists">
+    <form id="home-element-2">
+        <input type="text" id="query" placeholder="Search for an artist to discover similar artists">
         <button id="submit">Draw Graph</button>
     </form>
 
