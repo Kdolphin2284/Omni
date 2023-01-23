@@ -244,7 +244,12 @@ function drawGraph(graph){
 // }
 
 const OmniLogo = document.getElementById('OmniLogo');
+<<<<<<< Updated upstream
 const uriPadding = document.getElementById('uri');
+=======
+const homeElement1 = document.getElementById('home-element-1');
+const homeElement2 = document.getElementById('home-element-2');
+>>>>>>> Stashed change
 
 function OmniLogoPlacement() {
     OmniLogo.style.position = "absolute";
@@ -252,8 +257,18 @@ function OmniLogoPlacement() {
     OmniLogo.style.left = "0";
     OmniLogo.style.padding = "30px 0 0 30px";
     OmniLogo.style.fontSize = "34px";
+<<<<<<< Updated upstream
     uri.style.padding = "10px";
     uri.style.background = "#000";
+=======
+    homeElement1.style.top = "0";
+    homeElement1.style.left = "0";
+    homeElement1.style.position = "absolute";
+    homeElement1.style.width = "90px";
+    homeElement1.style.height = "32px";
+    homeElement1.style.padding = "30px 0 0 30px";
+    homeElement2.style.top = "0";
+>>>>>>> Stashed changes
 }
 
 // End Added Code
