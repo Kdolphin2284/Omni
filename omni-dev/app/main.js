@@ -48,11 +48,11 @@ function addToGraph(graphObj, artist, nodeObj, linkObj) {
 
 function buildGraph(originalArtist, artists, existingGraph) {
     var graphObj = existingGraph || {
-        nodes: [{id: originalArtist.name, uri: originalArtist.uri}],
+        nodes: [{id: originalArtist.name, uri: originalArtist.uri, image: originalArtist.images[0].url, uuid: originalArtist.id}],
         links: []
     };
     graphObj = artists.reduce(function(accum, artist) {
-        var nodeObj = {id: artist.name, uri: artist.uri};
+        var nodeObj = {id: artist.name, uri: artist.uri, image: artist.images[0].url, uuid: artist.id};
         var linkObj = {source: originalArtist.name};
         return addToGraph(graphObj, artist, nodeObj, linkObj);
     }, graphObj);
@@ -77,13 +77,20 @@ function getRelatedArtists(artistId) {
 }
 
 function getFirstDegreeArtists(response) {
+    let maxArists = 8;
     if (!response.artists.items.length){
         $("#message").text("¯\\_(ツ)_/¯ Can't find that artist - try again.");
     }
     var artist = response.artists.items[0];
     $("#uri").attr("href", artist.uri).text($("#query").val());
     return $.when(artist, getRelatedArtists(artist.id)
-        .then(function(response) { return response.artists; }));
+        .then(function(response) { 
+            if(response.artists.length > maxArists){
+                response.artists = response.artists.slice(0,maxArists);
+            }
+            console.log(response.artists);
+            return response.artists; 
+        }));
 }
 
 // function getSecondDegreeArtists(firstDegreeGraph, firstDegreeArtists) {
@@ -157,15 +164,33 @@ function drawGraph(graph){
                 .style("opacity", 0);
         });
 
-        // d3.select("circle").style("r", "30");
+
+    var pattern = svg.append('svg:defs');
+    for(let artist of graph.nodes) {
+        pattern.append("svg:pattern")
+        .attr("id", artist.uuid)
+        .attr("width", 1)
+        .attr("height", 1)
+        .attr("viewBox", "0 0 128 128")
+        .attr("preserveAspectRatio", "none")
+        .append("svg:image")
+        .attr("width", 128)
+        .attr("height", 128)
+        .attr("xlink:href", artist.image)
+        .attr("preserveAspectRatio", "none");
+    }
+
+    console.log(graph.nodes);
+
 
     var node = svg.append("g")
         .attr("class", "nodes")
         .selectAll("circle")
         .data(graph.nodes)
-        .enter().append("circle")
+        .enter()
+        .append("circle")
         .attr("r", 128)
-        .attr("fill", "#12121")
+        .style("fill", function(d) {return "url(#" + d.uuid + ")"})
         .on("mouseover", function(d) {
             d3.select(this).transition().duration(200).attr("r", 160)
             div.transition()
@@ -193,6 +218,12 @@ function drawGraph(graph){
             .on("drag", dragged)
             .on("end", dragended));
 
+            // node.append("image")
+            // .attr("xlink:href", 'http://placekitten.com/g/48/48')
+            // .attr("width", 128)
+            // .attr("height", 128)
+            // .attr("preserveAspectRatio", "none");
+
     simulation
         .nodes(graph.nodes)
         .on("tick", ticked)
@@ -202,6 +233,7 @@ function drawGraph(graph){
         .links(graph.links);
 
     function ticked() {
+        console.log("UPDATED 1");
         link
             .attr("x1", function(d) { return d.source.x; })
             .attr("y1", function(d) { return d.source.y; })
@@ -211,6 +243,11 @@ function drawGraph(graph){
         node
             .attr("cx", function(d) { return d.x; })
             .attr("cy", function(d) { return d.y; });
+
+            
+            // pattern.attr("x", (function(d) { return d.x;}))
+                // .attr("y", function(d) {return d.y;})
+            // ;
     }
 
     function dragstarted(d) {
@@ -244,12 +281,9 @@ function drawGraph(graph){
 // }
 
 const OmniLogo = document.getElementById('OmniLogo');
-<<<<<<< Updated upstream
 const uriPadding = document.getElementById('uri');
-=======
-const homeElement1 = document.getElementById('home-element-1');
-const homeElement2 = document.getElementById('home-element-2');
->>>>>>> Stashed change
+// const homeElement1 = document.getElementById('home-element-1');
+// const homeElement2 = document.getElementById('home-element-2');
 
 function OmniLogoPlacement() {
     OmniLogo.style.position = "absolute";
@@ -257,18 +291,15 @@ function OmniLogoPlacement() {
     OmniLogo.style.left = "0";
     OmniLogo.style.padding = "30px 0 0 30px";
     OmniLogo.style.fontSize = "34px";
-<<<<<<< Updated upstream
     uri.style.padding = "10px";
     uri.style.background = "#000";
-=======
-    homeElement1.style.top = "0";
-    homeElement1.style.left = "0";
-    homeElement1.style.position = "absolute";
-    homeElement1.style.width = "90px";
-    homeElement1.style.height = "32px";
-    homeElement1.style.padding = "30px 0 0 30px";
-    homeElement2.style.top = "0";
->>>>>>> Stashed changes
+    // homeElement1.style.top = "0";
+    // homeElement1.style.left = "0";
+    // homeElement1.style.position = "absolute";
+    // homeElement1.style.width = "90px";
+    // homeElement1.style.height = "32px";
+    // homeElement1.style.padding = "30px 0 0 30px";
+    // homeElement2.style.top = "0";
 }
 
 // End Added Code
