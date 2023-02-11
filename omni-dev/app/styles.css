@@ -21,11 +21,273 @@
 html {
     min-height: 100vh;
     max-height: 100vh;
-    background: radial-gradient(circle at center, #0E3562, #030316 100%);
+    /* background: radial-gradient(circle at center, #0E3562, #030316 100%); */
 }
 * {
     font-family: JosefinSans Regular;
+    margin: 0;
+    padding: 0;
+    font-size: 16px;
 }
+
+/* Universal */
+.invert {
+    filter: invert();
+}
+.flex-between {
+    display: flex;
+    justify-content: space-between;
+}
+.flex-column {
+    display: flex;
+    flex-direction: column;
+}
+.flex-horizontal-16 {
+    display: flex;
+    gap: 16px;
+}
+
+/* Home Page */
+
+/* Layout */
+body {
+    height: 100vh;
+    background: radial-gradient(55.57% 55.57% at 50% 44.43%, #195398 0%, #030316 99.29%);
+    overflow-y: hidden;
+}
+/* #album-container::-webkit-scrollbar-button {
+    display: none;
+} */
+.container {
+    display: grid;
+    grid-template-columns: repeat(12, [col-start] 1fr);
+    gap: 16px;
+    margin: 48px;
+}
+
+/* Navbar */
+.nav-container {
+    grid-column: span 12;
+    height: 40px;
+}
+.nav-container img {
+    height: inherit;
+}
+.nav-content {
+    display: flex;
+    justify-content: right;
+    align-items: center;
+    gap: 16px;
+}
+.nav-expanded {
+    justify-content: space-between;
+}
+.nav-content > div:nth-child(1) {
+    display: flex;
+    gap: 48px;
+}
+.nav-content > div:nth-child(2) {
+    display: flex;
+    gap: 16px;
+}
+.nav-logo {
+    font-size: 32px;
+    font-weight: 700;
+    color: #F7CA47;
+    text-decoration: none;
+}
+
+/* Content */
+.content-main {
+    grid-column: col-start 4 / span 6;
+    gap: 40px;
+    max-width: 1200px;
+    width: 100%;
+    margin: 160px auto 0 auto;
+}
+.container-secondary {
+    gap: 16px;
+}
+.container-secondary:nth-child(3) > div:nth-child(1) {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.container-top-artists {
+    display: flex;
+    justify-content: space-between;
+}
+
+/* Components */
+.btn {
+    display: flex;
+    align-items: center;
+    background: #282828;
+    color: white;
+    padding: 10px;
+    border-radius: 24px;
+    border: none;
+    cursor: pointer;
+    gap: 8px;
+    white-space: nowrap;
+    transition: .2s;
+}
+.btn:hover {
+    background: #494949;
+}
+.btn:active {
+    background: #ffffff;
+    color: #282828;
+}
+.btn:active .icon {
+    filter: invert();
+}
+.dropbtn {
+    gap: 8px;
+}
+.logo {
+    margin: 0 auto;
+}
+.h1-title {
+    font-family: Josefin Sans;
+    font-size: 128px;
+    font-weight: 700;
+    line-height: 128px;
+    text-align: center;
+    background: linear-gradient(97.53deg, #F7CA47 -1.61%, #C28000 97.12%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+.h2-title {
+    font-size: 20px;
+    color: white;
+    font-weight: 600;
+    width: fit-content;
+}
+
+/* Artist Components */
+.img-placeholder-sm {
+    width: 24px;
+    height: 24px;
+    border-radius: 36px;
+    background: #F7CA47;
+}
+.img-placeholder-lg {
+    width: 80px;
+    height: 80px;
+    border-radius: 36px;
+    background: #F7CA47;
+}
+.btn-artist {
+    background: none;
+    border: none;
+    text-align: left;
+    gap: 16px;
+    cursor: pointer;
+}
+.artistButtonText {
+    color: white;
+}
+
+/* Artist Popup */
+.container-artist-popup {
+    position: fixed;
+    background: radial-gradient(100% 100% at 100% 0%, rgba(238, 120, 50, 0.664) 4.17%, rgba(34, 34, 34, 0.72) 71.62%, rgba(0, 0, 0, 0.72) 100%);
+    height: 100vh;
+    padding: 24px;
+    gap: 24px;
+    top: 0;
+    right: 0;
+    z-index: 1;
+    backdrop-filter: blur(25px);
+    width: 550px;
+    overflow-y: scroll !important; 
+}
+.artist-basic-info {
+    gap: 16px;
+}
+.artist-image {
+    width: 118px;
+    height: 118px;
+    background: white;
+    border-radius: 80px;
+}
+.artist-name {
+    font-size: 32px;
+    color: white;
+}
+/* Popular songs */
+.artist-popular-songs {
+    color: white;
+}
+.container-artists-songs {
+    margin: 0 -8px;
+}
+
+.artist-song {
+    align-items: center;
+    height: 52px;
+    border-radius: 8px;
+}
+.artist-song > div:nth-child(1) {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding-left: 8px;
+}
+.artist-song > div:nth-child(2) {
+    display: flex;
+    gap: 48px;
+    color: #C8C8C8;
+    padding-right: 24px;
+}
+.artist-song:hover {
+    background: rgba(61, 61, 61, 0.5);
+}
+.artist-song:active {
+    background: rgba(95, 95, 95, 0.5);
+}
+.album-cover-sm {
+    width: 36px;
+    height: 36px;
+    background-color: white;
+    border-radius: 4px;
+}
+.song-name > img:nth-child(2) {
+    width: 14px;
+    background-color: white;
+    height: 14px;
+    border-radius: 4px;
+}
+/* Discography */
+.container-albums {
+    display: flex;
+    gap: 32px;
+    overflow-x: scroll;
+    height: 206px;
+    padding-bottom: 16px;
+}
+.album {
+    gap: 8px;
+    color: white;
+}
+.album-cover-lg {
+    width: 128px;
+    height: 128px;
+    border-radius: 4px;
+    background-color: white;
+}
+.album-name {
+    /* font-weight: 600px; */
+    margin-top: 8px;
+}
+.album-year {
+    color: #C8C8C8;
+    font-size: 14px;
+    margin-top: -8px;
+}
+
 a {
     text-decoration: none;
     display: inline-block;
@@ -34,9 +296,9 @@ body {
     background-color: transparent;
     color: #fff;
     margin: 0 auto;
-    margin-top: 50px;
-    text-align: center;
-    font-family: 'Helvetica', sans-serif;
+    /* margin-top: 50px; */
+    /* text-align: center; */
+    font-family: JosefinSans Regular, sans-serif;
     line-height: 1.5em;
 }
 header.navigation {
@@ -110,7 +372,6 @@ h1 {
     display: none;
 }
 #query {
-    width: 500px !important;
     padding-left: 20px;
 }
 svg {
@@ -130,14 +391,86 @@ svg {
     font-weight: 300;
 }
 #chart {
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    top: 360px;
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    /* top: 360px; */
 }
+
+.right {
+    right: 0;
+}
+
+#modal {
+    /* background-color: white; */
+    /* width: 200px; */
+    /* height: 100px; */
+    position: absolute;
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+    .modal-flex {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    }
+    .button {
+        width: fit-content;
+        margin: 0 auto;
+      }
+
+
+/* Inline #2 | https://omnimusic.co/omni-dev/app/index.php?state=GVSOSGSDPUW7IWSL */
+
+.button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .button img {
+    margin-right: 10px;
+    height: 30px;
+  }
+  
+  .modal-flex .button img {
+    height: 30px;
+  }
+  
+  #modal > .button img {
+    height: 20px;
+  }
+  
+  .button {
+    border-radius: 100px;
+  }
+  
+  .modal-flex > img {
+    padding: 0 25px;
+  }
+  
+  /* styles.css | https://omnimusic.co/omni-dev/app/styles.css?version=1675642269890 */
+  
+  .modal-flex {
+    margin-top: 20px;
+  }
+  
+
+#modal .button {
+    background-color: #282828;
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
+}
+
 .links line {
-    stroke: #999;
-    stroke-opacity: 0.6;
+    stroke: rgba(150, 163, 176, 0.5);
+    stroke-opacity: 1;
 }
 
 .links line:hover {
@@ -167,12 +500,31 @@ div.tooltip {
     border-radius: 5px;
     pointer-events: none;
 }
+#home-element-2 input {
+    height: 40px;
+    border: none;
+    border-radius: 24px;
+    display: flex;
+    font-family: JosefinSans Regular;
+    font-size: 20px;
+    color: #282828;
+    width: calc(100% - 50px);
+    position: relative;
+    margin: 0;
+    padding: 5px 5px 0 50px;
+}
+#home-element-2 img {
+    position: absolute;
+    top: 50%;
+    left: 13px;
+    transform: translateY(-50%);
+    z-index: 1000;
+}
 #home-element-1,
 #home-element-2,
 #home-element-3,
 #home-element-4 {
-    position: relative;
-    top: 20vh;
+    /* position: relative; */
     z-index: 1000;
 }
 
@@ -193,3 +545,58 @@ svg:not(:root) {
         margin-top: 0;
     }
 }
+
+
+
+/* DISPLAY NONE OF ELEMENTS AFTER SEARCH */
+
+/* .content-main.flex-column .container-secondary.flex-column, #home-element-2 {
+    display: none;
+} */
+
+/* WEEK 4 HOMEWORK */
+
+#uri {
+    position: absolute;
+    top: 160px;
+    margin: 0 auto;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.container-artist-popup {
+    position: fixed;
+    right: -600px;
+    transition: 0.4s all ease-in-out;
+}
+
+.container-artist-selected {
+    right: 0;
+}
+
+html {
+    overflow-x: hidden;
+}
+
+#homepageLink {
+    display: none;
+    width: 100px;
+    height: 40px;
+    position: absolute;
+    top: 48px;
+    left: 48px;
+    z-index: 10000;
+}
+.container-top-artists .btn-artist.flex-column:first-child {
+    padding-left: 0;
+} 
+.container-top-artists .btn-artist.flex-column:last-child {
+    padding-right: 0;
+}
+.artistButtonText, button {
+    text-transform: initial;
+}
+#modal .button {
+    cursor: pointer;
+}
+  
