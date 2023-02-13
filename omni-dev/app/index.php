@@ -28,14 +28,14 @@ $milliseconds = intval(microtime(true) * 1000);
             <button onclick="modalGone()" class="btn">
                 <img src="images/material-symbols_close.svg" class="icon">
             </button>
-            <button onclick="myFunction()" class="btn">
+            <button onclick="openArtistSpotify()" class="btn">
                 <span>Open on Spotify</span>
                 <img src="images/spotify.svg" class="icon">
             </button>
         </div>
         <div class="artist-basic-info flex-column">
-            <img src="#" alt="" class="artist-image">
-            <h4 class="artist-name">Artist Name</h4>
+            <img src="#" alt="" class="artist-image" id="modal_artist_image">
+            <h4 class="artist-name" id="modal_artist_name">Artist Name</h4>
             <div class="flex-horizontal-16">
                 <button onclick="myFunction()" class="btn">
                     <img src="images/overview.svg" class="icon">
@@ -49,7 +49,7 @@ $milliseconds = intval(microtime(true) * 1000);
         </div>
         <div class="artist-popular-songs container-secondary flex-column">
             <h2 class="h2-title">Popular Songs</h2>
-            <div class="container-artists-songs flex-column">
+            <div class="container-artists-songs flex-column" id="song_list_modal_parent">
                 <div class="artist-song flex-between">
                     <div>
                         <img src="#" alt="" class="album-cover-sm">
@@ -257,14 +257,21 @@ $milliseconds = intval(microtime(true) * 1000);
     <div id="modal">
         <div class='button' onclick="modalRight()"><img src="images/artistInfoIcon.png" alt="Artist Info Icon" /><span id="selected_artist_modal_name">Name</span></div>
         <div id="extra-kids">
-        <div class="modal-flex">
-            <div class='button'><img src="images/artistInfluencesIcon.png" alt="Artist Info Icon">Influences</div>
-            <img src="images/artistArrowLeft.png" alt="Artist Info Icon">
-            <div class='button'><img src="images/similarArtistIcon.png" alt="Artist Info Icon">Similar Artists</div>
-            <img src="images/artistArrowRight.png" alt="Artist Info Icon">
-            <div class='button'><img src="images/influencedArtistIcon.png" alt="Artist Info Icon">Influenced</div>
+            <div class="modal-flex">
+                <div class='button'><img src="images/artistInfluencesIcon.png" alt="Artist Info Icon">Influences</div>
+                <img src="images/artistArrowLeft.png" alt="Artist Info Icon">
+                <div class='button'><img src="images/similarArtistIcon.png" alt="Artist Info Icon">Similar Artists</div>
+                <img src="images/artistArrowRight.png" alt="Artist Info Icon">
+                <div class='button'><img src="images/influencedArtistIcon.png" alt="Artist Info Icon">Influenced</div>
+            </div>
         </div>
-</div>
+        <div id="original-artist-extra-kids">
+            <div class="modal-flex">
+                <div class='button'><img src="images/artistInfluencesIcon.png" alt="Artist Info Icon"></div>
+                <div class='button'><img src="images/similarArtistIcon.png" alt="Artist Info Icon"></div>
+                <div class='button'><img src="images/influencedArtistIcon.png" alt="Artist Info Icon"></div>
+            </div>
+        </div>
     </div> 
 
     <script src="https://code.jquery.com/jquery-3.1.1.min.js" ></script>

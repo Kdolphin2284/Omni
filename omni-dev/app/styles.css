@@ -227,12 +227,14 @@ body {
 
 .artist-song {
     align-items: center;
-    height: 52px;
+    /* height: 52px; */
     border-radius: 8px;
+    padding: 5px 0;
+    cursor: pointer;
 }
 .artist-song > div:nth-child(1) {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     gap: 16px;
     padding-left: 8px;
 }
@@ -265,7 +267,7 @@ body {
     display: flex;
     gap: 32px;
     overflow-x: scroll;
-    height: 206px;
+    /* height: 206px; */
     padding-bottom: 16px;
 }
 .album {
@@ -599,4 +601,28 @@ html {
 #modal .button {
     cursor: pointer;
 }
-  
+
+
+
+#original-artist-extra-kids .button {
+    padding: 8px 16px;
+    border-radius: 100px;
+}
+#original-artist-extra-kids .modal-flex {
+    margin: 0;
+}
+#original-artist-extra-kids {
+    margin-top: 20px;
+    padding: 5px;
+    background: #282828;
+    border-radius: 100px;
+}
+#original-artist-extra-kids .button img {
+    width: 22px;
+    height: 22px;
+    margin: 0;
+    background: #282828;
+}
+.song-name > p:first-child {
+    max-width: 250px;
+}

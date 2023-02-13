@@ -11,6 +11,13 @@ let MY_AUTH_TOKEN = "";
 let SELECTED_ARTIST = "";
 let SELECTED_NODE;
 
+/**
+ * Artist Name Modal: #modal_artist_name
+ * Artist Image Modal: #modal_artist_image
+ * Song List Modal: #song_list_modal_parent
+ * Album Container: #album_container
+ */
+
 let MY_ID = "";
 window.onload = function (w) {
     
@@ -50,6 +57,10 @@ function addToGraph(graphObj, artist, nodeObj, linkObj) {
 
 let EXPANDED_NODE_SIZE = 102.5;
 
+function openArtistSpotify() {
+    window.open(SELECTED_NODE['uri'], '_blank');
+}
+
 function buildGraph(originalArtist, artists, existingGraph) {
     var graphObj = existingGraph || {
         nodes: [{id: originalArtist.name, uri: originalArtist.uri, image: originalArtist.images[0].url, uuid: originalArtist.id, original: true, rad: EXPANDED_NODE_SIZE}],
@@ -75,6 +86,106 @@ function getArtist(query) {
     });
 }
 
+
+
+// Kyle Work 
+
+function getArtistTracks(artistId) {
+    return $.ajax({
+        url: "https://api.spotify.com/artists/" + artistId + "/top-tracks",
+        url: "https://api.spotify.com/artists/" + artistId + "/albums"
+    });
+}
+
+// Kyle End
+
+function loadArtistTopTracks(artistId) {
+    return $.ajax({
+        url: `https://api.spotify.com/v1/artists/${artistId}/top-tracks?market=ES`
+    });
+}
+
+function getArtistTopTracks(artistId) {
+    return $.when(loadArtistTopTracks(artistId)).then(function( data, textStatus, jqXHR ) {
+        // alert( jqXHR.status ); // Alerts 200
+        updateModalWithTrackData(data);
+        console.log(data);
+        // console.log(JSON.stringify(data));
+      });
+}
+
+function loadArtistAlbums(artistId) {
+    return $.ajax({
+        url: `https://api.spotify.com/v1/artists/${artistId}/albums?market=ES&include_groups=album`
+    });
+}
+
+function getArtistAlbums(artistId) {
+    return $.when(loadArtistAlbums(artistId)).then(function(data, textStatus, jqXHR) {
+        console.log(data);
+        updateModalWithAlbumData(data);
+    });
+}
+
+function buildAlbumHTML(element) {
+    let html = `
+    <div class="album flex-column">
+        <img src="${element['images'][0]['url']}" alt="" class="album-cover-lg">
+        <p class="album-name">${element['name']}</p>
+        <p class="album-year">${element['release_date'].substring(0,4)}</p>
+    </div>`;
+    return html;
+}
+
+function updateModalWithAlbumData(data) {
+    let albums = data['items'];
+    let albumHtmls = [];
+    for(const element of albums) {
+        albumHtmls.push(buildAlbumHTML(element));
+    }
+    let albumList = albumHtmls.join("\n");
+    $("#album-container").html(albumList);
+}
+
+function updateModalWithTrackData(data) {
+    //ahahahahahahahahahahahahahah
+    let tracks = data['tracks'];
+    let songHtmls = [];
+    let count = 0;
+    for(const element of tracks) {
+        songHtmls.push(buildSongEntry(element));
+        if(count++ == 4) break;
+    }
+    let songList = songHtmls.join("\n");
+    $("#song_list_modal_parent").html(songList);
+
+}
+
+function millisToMinutesAndSeconds(millis) {
+    var minutes = Math.floor(millis / 60000);
+    var seconds = ((millis % 60000) / 1000).toFixed(0);
+    return minutes + ":" + (seconds < 10 ? '0' : '') + seconds;
+  }
+
+function buildSongEntry(element) {
+    let htmlFiller = `<div class="artist-song flex-between">
+    <div>
+        <img src="${element['album']['images'][0]['url']}" alt="${element['album']['name']}" class="album-cover-sm">
+        <div class="song-name">
+            <p>${element['name']}</p>
+            <p class="explicit">${element['explicit'] === true ? " (E)" : ""}</p>
+        </div>
+    </div>
+    <div>
+        <p>Popularity: ${element['popularity']}</p>
+        <p>${millisToMinutesAndSeconds(element['duration_ms'])}</p>
+    </div>
+</div>`;
+    return htmlFiller;
+}
+
+
+
 function getRelatedArtists(artistId) {
     return $.ajax({
         url: "https://api.spotify.com/v1/artists/" + artistId + "/related-artists"
@@ -82,7 +193,7 @@ function getRelatedArtists(artistId) {
 }
 
 function getFirstDegreeArtists(response) {
-    let maxArists = 8;
+    let maxArtists = 8;
     if (!response.artists.items.length){
         $("#message").text("¯\\_(ツ)_/¯ Can't find that artist - try again.");
     }
@@ -90,8 +201,8 @@ function getFirstDegreeArtists(response) {
     $("#uri").attr("href", artist.uri).text(artist.name);
     return $.when(artist, getRelatedArtists(artist.id)
         .then(function(response) { 
-            if(response.artists.length > maxArists){
-                response.artists = response.artists.slice(0,maxArists);
+            if(response.artists.length > maxArtists){
+                response.artists = response.artists.slice(0,maxArtists);
             }
             console.log(response.artists);
             return response.artists; 
@@ -160,10 +271,14 @@ function showModal(artist, x, y) {
         animateGraphToCenter(defaultMiddleX, defaultMiddleY);
     }
     else{
-        animateGraphToCenter(chartWidth * 3 / 4, chartHeight / 2);
+        animateGraphToCenter(chartWidth * 3 / 5, defaultMiddleY);
     }
     // modalRight();
+    getArtistTopTracks(artist.uuid);
+    getArtistAlbums(artist.uuid);
     $("#selected_artist_modal_name").html(artist.id);
+    $("#modal_artist_name").html(artist.id);
+    $("#modal_artist_image").attr("src", artist.image);
     SELECTED_NODE = artist;
     // $("#modal").html(JSON.stringify(artist));
     $("#modal").css("top", y);
@@ -179,9 +294,11 @@ function updateModal(artist, x, y) {
     $("#modal").css("display", "block");
     if(artist.original){
         $("#extra-kids").css("display", "none");
+        $("#original-artist-extra-kids").css("display", "block");
     }
     else{
         $("#extra-kids").css("display", "block");
+        $("#original-artist-extra-kids").css("display", "none");
         //x = is the middle
         //x - (EXPANDED_NODE_SIZE / 2) - (1.5)
     }
