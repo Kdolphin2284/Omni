@@ -86,19 +86,6 @@ function getArtist(query) {
     });
 }
 
-
-
-// Kyle Work 
-
-function getArtistTracks(artistId) {
-    return $.ajax({
-        url: "https://api.spotify.com/artists/" + artistId + "/top-tracks",
-        url: "https://api.spotify.com/artists/" + artistId + "/albums"
-    });
-}
-
-// Kyle End
-
 function loadArtistTopTracks(artistId) {
     return $.ajax({
         url: `https://api.spotify.com/v1/artists/${artistId}/top-tracks?market=ES`
@@ -271,7 +258,7 @@ function showModal(artist, x, y) {
         animateGraphToCenter(defaultMiddleX, defaultMiddleY);
     }
     else{
-        animateGraphToCenter(chartWidth * 3 / 5, defaultMiddleY);
+        animateGraphToCenter(chartWidth * 3 / 4, defaultMiddleY / 1.4);
     }
     // modalRight();
     getArtistTopTracks(artist.uuid);
@@ -482,8 +469,12 @@ function drawGraph(graph){
         
         let nX = -1;
         let nY = -1;
-        let SELECTED_NODE_ANCHOR_X = 350;
-        let SELECTED_NODE_ANCHOR_Y = chartHeight / 2 - (EXPANDED_NODE_SIZE);
+        let SELECTED_NODE_ANCHOR_X = chartWidth / 2;
+        // let SELECTED_NODE_ANCHOR_X = 1000;
+        // let SELECTED_NODE_ANCHOR_X = 350;
+        let SELECTED_NODE_ANCHOR_Y = chartHeight / 2.06;
+        // let SELECTED_NODE_ANCHOR_Y = chartHeight / 1.785 - (EXPANDED_NODE_SIZE);
+        // let SELECTED_NODE_ANCHOR_Y = chartHeight / 2 - (EXPANDED_NODE_SIZE);
         let artistJawn = null;
         let animationPosition;
         if(SELECTED_ARTIST != null){
