@@ -159,7 +159,7 @@ function buildSongEntry(element) {
     <div>
         <img src="${element['album']['images'][0]['url']}" alt="${element['album']['name']}" class="album-cover-sm">
         <div class="song-name">
-            <p>${element['name']}</p>
+            <p>${element['name'].substring(0,33)}</p>
             <p class="explicit">${element['explicit'] === true ? " (E)" : ""}</p>
         </div>
     </div>
