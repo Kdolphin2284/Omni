@@ -25,8 +25,8 @@ $milliseconds = intval(microtime(true) * 1000);
     <a href="https://omnimusic.co/omni-dev/app/" id="homepageLink"></a>
     <div class="container-artist-popup flex-column">
         <div class="flex-between">
-            <button onclick="modalGone()" class="btn">
-                <img src="images/material-symbols_close.svg" class="icon">
+            <button onclick="modalGone()" id="closeModal" class="btn">
+                <img src="images/material-symbols_close.svg" id="closeModalX" class="icon">
             </button>
             <button onclick="openArtistSpotify()" class="btn">
                 <span>Open on Spotify</span>
@@ -163,7 +163,7 @@ $milliseconds = intval(microtime(true) * 1000);
         </div>
     </div>
     <div class="container">
-        <div class="nav-container">
+        <div class="nav-container" id="nav-container-id">
         <!-- <img src="images/logo-lg.svg" alt="logo"> -->
             <div class="nav-content">
                 <div class="user-button">
@@ -207,7 +207,7 @@ $milliseconds = intval(microtime(true) * 1000);
             </div>
             <div class="container-secondary flex-column" id="top-artists">
                 <div>
-                    <h2 class="h2-title">Top artists</h2>   
+                    <h2 class="h2-title">Your top artists</h2>   
                     <div class="dropdown">
                         <button onclick="myFunction()" class="btn dropbtn">
                             <span>Last 30 Days</span>
@@ -255,21 +255,39 @@ $milliseconds = intval(microtime(true) * 1000);
     <h2 id="message"></h2>
     <svg id="chart"></svg>
     <div id="modal">
-        <div class='button' onclick="modalRight()"><img src="images/artistInfoIcon.png" alt="Artist Info Icon" /><span id="selected_artist_modal_name">Name</span></div>
+        <div class='button' onclick="modalRight()"><img class="icon" src="images/artistInfoIcon.svg" alt="Artist Info Icon" /><span id="selected_artist_modal_name">Name</span></div>
         <div id="extra-kids">
             <div class="modal-flex">
-                <div class='button'><img src="images/artistInfluencesIcon.png" alt="Artist Info Icon">Influences</div>
+                <div onmouseover="showInfluencesToolTip()" onmouseout="closeInfluencesToolTip()" id="influencesButtonOuterNodes" class='button'><img class="icon" src="images/artistInfluencesIcon.svg" alt="Artist Info Icon"><p>Influences</p></div>
+                <div id="influencesToolTip">
+                    <p class="toolTipText">Explore the artists who influenced this artist<p/>
+                </div>
                 <img src="images/artistArrowLeft.png" alt="Artist Info Icon">
-                <div class='button'><img src="images/similarArtistIcon.png" alt="Artist Info Icon">Similar Artists</div>
+                <div onmouseover="showSimilarToolTip()" onmouseout="closeSimilarToolTip()" id="similarButtonOuterNodes" class='button'><img class="icon" src="images/similarArtistIcon.svg" alt="Artist Info Icon"><p>Similar Artists</p></div>
+                <div id="similarToolTip">
+                    <p class="toolTipText">Explore the artists who are similar to this artist<p/>
+                </div>
                 <img src="images/artistArrowRight.png" alt="Artist Info Icon">
-                <div class='button'><img src="images/influencedArtistIcon.png" alt="Artist Info Icon">Influenced</div>
+                <div onmouseover="showInfluencedToolTip()" onmouseout="closeInfluencedToolTip()" id="influencedButtonOuterNodes" class='button'><img class="icon" src="images/influencedArtistIcon.svg" alt="Artist Info Icon"><p>Influenced</p></div>
+                <div id="influencedToolTip">
+                    <p class="toolTipText">Explore the artists who were influenced by this artist<p/>
+                </div>
             </div>
         </div>
         <div id="original-artist-extra-kids">
             <div class="modal-flex">
-                <div class='button'><img src="images/artistInfluencesIcon.png" alt="Artist Info Icon"></div>
-                <div class='button'><img src="images/similarArtistIcon.png" alt="Artist Info Icon"></div>
-                <div class='button'><img src="images/influencedArtistIcon.png" alt="Artist Info Icon"></div>
+                <div onmouseover="showOriginalInfluencesToolTip()" onmouseout="closeOriginalInfluencesToolTip()" id="originalInfluences" class='button'><img class="icon" src="images/artistInfluencesIcon.svg" alt="Artist Info Icon"></div>
+                <div id="originalInfluencesToolTip">
+                    <p class="toolTipText">Explore the artists who influenced this artist<p/>
+                </div>
+                <div onmouseover="showOriginalSimilarToolTip()" onmouseout="closeOriginalSimilarToolTip()" id="originalSimilar" class='button'><img class="icon" src="images/similarArtistIcon.svg" alt="Artist Info Icon"></div>
+                <div id="originalSimilarToolTip">
+                    <p class="toolTipText">Explore the artists who are similar to this artist<p/>
+                </div>
+                <div onmouseover="showOriginalInfluencedToolTip()" onmouseout="closeOriginalInfluencedToolTip()" id="originalInfluenced" class='button'><img class="icon" src="images/influencedArtistIcon.svg" alt="Artist Info Icon"></div>
+                <div id="originalInfluencedToolTip">
+                    <p class="toolTipText">Explore the artists who were influenced by this artist<p/>
+                </div>
             </div>
         </div>
     </div> 

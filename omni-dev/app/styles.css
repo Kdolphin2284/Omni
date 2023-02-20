@@ -134,7 +134,11 @@ body {
 }
 .btn:hover {
     background: #494949;
+    color: #fff;
 }
+/* .btn:hover .icon {
+    filter: invert();
+} */
 .btn:active {
     background: #ffffff;
     color: #282828;
@@ -202,7 +206,8 @@ body {
     z-index: 1;
     backdrop-filter: blur(25px);
     width: 550px;
-    overflow-y: scroll !important; 
+    overflow-y: scroll !important;
+    z-index: 20001;
 }
 .artist-basic-info {
     gap: 16px;
@@ -621,8 +626,168 @@ html {
     width: 22px;
     height: 22px;
     margin: 0;
-    background: #282828;
+    /* background: #282828; */
 }
 .song-name > p:first-child {
     max-width: 250px;
 }
+#nav-container-id {
+    z-index: 20000;
+    position: inherit;
+}
+#influencesButtonOuterNodes, #similarButtonOuterNodes, #influencedButtonOuterNodes {
+    position: relative;
+}
+#influencesToolTip {
+    left: 0;
+    bottom: -70%;
+    padding: 10px 20px;
+    background: #494949;
+    border-radius: 100px;
+    position: absolute;
+    display: none;
+    transition: .5s all ease-in-out;
+}
+  
+#influencesToolTip::before {
+    position: absolute;
+    display: block;
+    content: '';
+    padding: 10px;
+    background: #494949;
+    top: -20px;
+    clip-path: polygon(0% 100%, 50% 0%, 100% 100%, 0% 100%);
+}
+
+
+
+#similarToolTip {
+    bottom: -70%;
+    padding: 10px 20px;
+    background: #494949;
+    border-radius: 100px;
+    position: absolute;
+    display: none;
+    transition: .5s all ease-in-out;
+}
+#similarToolTip::before {
+    position: absolute;
+    display: block;
+    content: '';
+    padding: 10px;
+    background: #494949;
+    top: -20px;
+    clip-path: polygon(0% 100%, 50% 0%, 100% 100%, 0% 100%);
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+#influencedToolTip {
+    right: 0;
+    bottom: -70%;
+    padding: 10px 20px;
+    background: #494949;
+    border-radius: 100px;
+    position: absolute;
+    display: none;
+    transition: .5s all ease-in-out;
+}
+#influencedToolTip::before {
+    position: absolute;
+    display: block;
+    content: '';
+    padding: 10px;
+    background: #494949;
+    top: -20px;
+    clip-path: polygon(0% 100%, 50% 0%, 100% 100%, 0% 100%);
+    right: 20px;
+}
+
+.button:active .icon, #modal .button:active .icon {
+    filter: invert();
+}
+
+.button:hover p,.button:hover span {
+    color: #fff;
+}
+.button:active p,.button:active span {
+    color: #000;
+}
+
+.button:hover, #modal .button:hover {
+    background: #494949;
+}
+.button:active, #modal .button:active {
+    background: #fff;
+}
+
+
+#originalInfluences, #originalSimilar, #originalInfluenced {
+    position: relative;
+}
+/* #originalInfluencesToolTip {
+    left: 0;
+    bottom: -70%;
+    padding: 10px 20px;
+    background: #494949;
+    border-radius: 100px;
+    position: absolute;
+    display: none;
+    transition: .5s all ease-in-out;
+    width: max-content;
+} */
+/* #originalInfluencesToolTip::before {
+    position: absolute;
+    display: block;
+    content: '';
+    padding: 10px;
+    background: #494949;
+    top: -20px;
+    clip-path: polygon(0% 100%, 50% 0%, 100% 100%, 0% 100%);
+} */
+
+
+#originalInfluencesToolTip, #originalSimilarToolTip, #originalInfluencedToolTip {
+    bottom: -70%;
+    padding: 10px 20px;
+    background: #494949;
+    border-radius: 100px;
+    position: absolute;
+    display: none;
+    transition: .5s all ease-in-out;
+    width: max-content;
+}
+#originalInfluencesToolTip::before, #originalSimilarToolTip::before, #originalInfluencedToolTip::before {
+    position: absolute;
+    display: block;
+    content: '';
+    padding: 10px;
+    background: #494949;
+    top: -20px;
+    clip-path: polygon(0% 100%, 50% 0%, 100% 100%, 0% 100%);
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+
+/* #originalInfluencedToolTip {
+    right: 0;
+    bottom: -70%;
+    padding: 10px 20px;
+    background: #494949;
+    border-radius: 100px;
+    position: absolute;
+    display: none;
+    transition: .5s all ease-in-out;
+    width: max-content;
+} */
+/* #originalInfluencedToolTip::before {
+    position: absolute;
+    display: block;
+    content: '';
+    padding: 10px;
+    background: #494949;
+    top: -20px;
+    clip-path: polygon(0% 100%, 50% 0%, 100% 100%, 0% 100%);
+    right: 20px;
+} */

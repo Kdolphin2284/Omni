@@ -118,7 +118,7 @@ function buildAlbumHTML(element) {
     let html = `
     <div class="album flex-column">
         <img src="${element['images'][0]['url']}" alt="" class="album-cover-lg">
-        <p class="album-name">${element['name']}</p>
+        <p class="album-name">${element['name'].substring(0,33)}</p>
         <p class="album-year">${element['release_date'].substring(0,4)}</p>
     </div>`;
     return html;
@@ -258,7 +258,7 @@ function showModal(artist, x, y) {
         animateGraphToCenter(defaultMiddleX, defaultMiddleY);
     }
     else{
-        animateGraphToCenter(chartWidth * 3 / 4, defaultMiddleY / 1.4);
+        animateGraphToCenter(chartWidth * 7.8 / 10, defaultMiddleY / 1.4);
     }
     // modalRight();
     getArtistTopTracks(artist.uuid);
@@ -613,7 +613,10 @@ const logoImg = document.getElementById('logo-img');
 function searchTriggersNone() {
     chart.style.position = 'fixed';
     homepageLink.style.display = 'inline-block';
+    homepageLink.style.position = 'absolute';
+    homepageLink.style.zIndex = '30000';
     homeElement2.style.position = 'absolute';
+    homeElement2.style.zIndex = '30000';
     homeElement2.style.top = '48px';
     homeElement2.style.left = '200px';
     query.style.margin = '0';
@@ -624,7 +627,7 @@ function searchTriggersNone() {
     logo.style.position = 'absolute';
     logo.style.top = '48px';
     logo.style.left = '48px';
-    logo.style.height = '44px';
+    logo.style.height = '32px';
     logoImg.style.height = 'inherit';
 }
 
@@ -659,6 +662,8 @@ $("#submit").on("click", function(e) {
     searchTriggersNone();
 });
 
+let navContainer = document.getElementById('nav-container-id');
+
 function modalRight() {
     $(".container-artist-popup").addClass("container-artist-selected");
 }
@@ -675,3 +680,74 @@ function modalGone() {
 //     $bg.style.setProperty("--mouseY", `${(y * mouseScale).toFixed(3)}%`);
 // });
 // 263, 264, 110, 89 (second degree artist information commented out starting on these 4 lines)
+
+
+
+
+
+
+// Show and hide tool tips on outer artist modals
+
+let influencesButton = document.getElementById('influencesButtonOuterNodes');
+let similarButton = document.getElementById('similarButtonOuterNodes');
+let influencedButton = document.getElementById('influencedButtonOuterNodes');
+
+let influencesToolTip = document.getElementById('influencesToolTip');
+let similarToolTip = document.getElementById('similarToolTip');
+let influencedToolTip = document.getElementById('influencedToolTip');
+
+function showInfluencesToolTip() {
+    influencesToolTip.style.display = 'block';
+}
+function closeInfluencesToolTip() {
+    influencesToolTip.style.display = 'none';
+}
+
+
+function showSimilarToolTip() {
+    similarToolTip.style.display = 'block';
+}
+function closeSimilarToolTip() {
+    similarToolTip.style.display = 'none';
+}
+
+
+function showInfluencedToolTip() {
+    influencedToolTip.style.display = 'block';
+}
+function closeInfluencedToolTip() {
+    influencedToolTip.style.display = 'none';
+}
+
+
+// Show and hide tool tips on central artist modal
+let originalInfluencesButton = document.getElementById('originalInfluences');
+let originalSimilarButton = document.getElementById('originalSimilar');
+let originalInfluencedButton = document.getElementById('originalInfluenced');
+
+let originalInfluencesToolTip = document.getElementById('originalInfluencesToolTip');
+let originalSimilarToolTip = document.getElementById('originalSimilarToolTip');
+let originalInfluencedToolTip = document.getElementById('originalInfluencedToolTip');
+
+function showOriginalInfluencesToolTip() {
+    originalInfluencesToolTip.style.display = 'block';
+}
+function closeOriginalInfluencesToolTip() {
+    originalInfluencesToolTip.style.display = 'none';
+}
+
+
+function showOriginalSimilarToolTip() {
+    originalSimilarToolTip.style.display = 'block';
+}
+function closeOriginalSimilarToolTip() {
+    originalSimilarToolTip.style.display = 'none';
+}
+
+
+function showOriginalInfluencedToolTip() {
+    originalInfluencedToolTip.style.display = 'block';
+}
+function closeOriginalInfluencedToolTip() {
+    originalInfluencedToolTip.style.display = 'none';
+}
