@@ -446,7 +446,7 @@ svg {
   }
   
   .modal-flex .button img {
-    height: 30px;
+    height: 24px;
   }
   
   #modal > .button img {
@@ -769,7 +769,17 @@ html {
     transform: translateX(-50%);
 }
 
-
+#extra-kids .modal-flex {
+    background: #282828;
+    border-radius: 100px;
+    padding: 6px;
+}
+.btn, .button {
+    transition: .2s all ease-in-out;
+}
+/* .nodes circle {
+    transition: .5s ease-in-out;
+} */
 /* #originalInfluencedToolTip {
     right: 0;
     bottom: -70%;

@@ -253,7 +253,9 @@ $milliseconds = intval(microtime(true) * 1000);
 
     <!-- <a id="uri"></a> -->
     <h2 id="message"></h2>
-    <svg id="chart"></svg>
+    <svg id="chart">
+        <!-- <div id="blur"></div> -->
+    </svg>
     <div id="modal">
         <div class='button' onclick="modalRight()"><img class="icon" src="images/artistInfoIcon.svg" alt="Artist Info Icon" /><span id="selected_artist_modal_name">Name</span></div>
         <div id="extra-kids">
@@ -262,12 +264,12 @@ $milliseconds = intval(microtime(true) * 1000);
                 <div id="influencesToolTip">
                     <p class="toolTipText">Explore the artists who influenced this artist<p/>
                 </div>
-                <img src="images/artistArrowLeft.png" alt="Artist Info Icon">
+                <!-- <img src="images/artistArrowLeft.png" alt="Artist Info Icon"> -->
                 <div onmouseover="showSimilarToolTip()" onmouseout="closeSimilarToolTip()" id="similarButtonOuterNodes" class='button'><img class="icon" src="images/similarArtistIcon.svg" alt="Artist Info Icon"><p>Similar Artists</p></div>
                 <div id="similarToolTip">
                     <p class="toolTipText">Explore the artists who are similar to this artist<p/>
                 </div>
-                <img src="images/artistArrowRight.png" alt="Artist Info Icon">
+                <!-- <img src="images/artistArrowRight.png" alt="Artist Info Icon"> -->
                 <div onmouseover="showInfluencedToolTip()" onmouseout="closeInfluencedToolTip()" id="influencedButtonOuterNodes" class='button'><img class="icon" src="images/influencedArtistIcon.svg" alt="Artist Info Icon"><p>Influenced</p></div>
                 <div id="influencedToolTip">
                     <p class="toolTipText">Explore the artists who were influenced by this artist<p/>
