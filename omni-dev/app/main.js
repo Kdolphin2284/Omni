@@ -159,12 +159,12 @@ function buildSongEntry(element) {
     <div>
         <img src="${element['album']['images'][0]['url']}" alt="${element['album']['name']}" class="album-cover-sm">
         <div class="song-name">
-            <p>${element['name'].substring(0,33)}</p>
+            <p>${element['name']}</p>
             <p class="explicit">${element['explicit'] === true ? " (E)" : ""}</p>
         </div>
     </div>
     <div>
-        <p>Popularity: ${element['popularity']}</p>
+        
         <p>${millisToMinutesAndSeconds(element['duration_ms'])}</p>
     </div>
 </div>`;

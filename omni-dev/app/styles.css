@@ -205,7 +205,7 @@ body {
     right: 0;
     z-index: 1;
     backdrop-filter: blur(25px);
-    width: 550px;
+    width: 502px;
     overflow-y: scroll !important;
     z-index: 20001;
 }
@@ -487,7 +487,7 @@ svg {
 }
 .nodes circle {
     stroke: #F7CA47;
-    stroke-width: 3px;
+    stroke-width: 2px;
 }
 .nodes circle:hover {
     cursor: pointer;
@@ -617,7 +617,7 @@ html {
     margin: 0;
 }
 #original-artist-extra-kids {
-    margin-top: 20px;
+    margin-top: 8px;
     padding: 5px;
     background: #282828;
     border-radius: 100px;
@@ -629,7 +629,10 @@ html {
     /* background: #282828; */
 }
 .song-name > p:first-child {
-    max-width: 250px;
+    overflow: hidden;
+    max-width: 32ch;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 #nav-container-id {
     z-index: 20000;
