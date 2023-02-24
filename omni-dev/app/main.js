@@ -291,7 +291,7 @@ function updateModal(artist, x, y) {
     }
     let leftX = ((x - 1.5)) - ($("#modal").width() / 2);
     console.log($("#modal").width());
-    $("#modal").css("top", y + (EXPANDED_NODE_SIZE * 1.25));
+    $("#modal").css("top", y + (EXPANDED_NODE_SIZE * 1.078));
     $("#modal").css("left", leftX);
 }
 function easeInOutQuad(x) {
