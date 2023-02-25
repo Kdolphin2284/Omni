@@ -434,7 +434,6 @@ input, button {
 }
 input {
     font-weight:300;
-    letter-spacing:2px;
     font-size:.95em;
     color:#000;
     background:#fff;
@@ -449,7 +448,6 @@ button {
     color:#fff;
     background:#2ebd59;
     text-transform:uppercase;
-    letter-spacing:2px;
     font-size: .85em;
     line-height: 1;
     border-radius: 20px;
