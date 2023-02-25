@@ -50,14 +50,112 @@ html {
 /* Home Page */
 
 /* Layout */
-body {
+/* body {
     height: 100vh;
     background: radial-gradient(55.57% 55.57% at 50% 44.43%, #195398 0%, #030316 99.29%);
     overflow-y: hidden;
-}
+} */
 /* #album-container::-webkit-scrollbar-button {
     display: none;
 } */
+body {
+    min-height: 100vh;
+    background-color: #051234;
+    background-image: 
+      radial-gradient(closest-side, rgb(13, 51, 97), rgba(13, 51, 97, 0)),
+      radial-gradient(closest-side, rgb(50, 9, 107), rgba(50, 9, 107, 0)),
+      radial-gradient(closest-side, rgb(9, 52, 126), rgba(9, 52, 126, 0)),
+      radial-gradient(closest-side, rgb(12, 52, 122), rgba(12, 52, 122, 0)),
+      radial-gradient(closest-side, rgb(120, 48, 222), rgba(120, 48, 222, 0));
+    background-size: 
+      130vmax 130vmax,
+      80vmax 80vmax,
+      90vmax 90vmax,
+      110vmax 110vmax,
+      90vmax 90vmax;
+    background-position:
+      -80vmax -80vmax,
+      60vmax -30vmax,
+      10vmax 10vmax,
+      -30vmax -10vmax,
+      50vmax 50vmax;
+    background-repeat: no-repeat;
+    animation: 20s movement linear infinite;
+    overflow-y: hidden;
+     
+  }
+  
+  body::after {
+    content: '';
+    display: block;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    backdrop-filter: blur(10px);
+    z-index: -1;
+    /* -webkit-backdrop-filter: blur(10px); */
+  }
+  
+  @keyframes movement {
+    0%, 100% {
+      background-size: 
+        130vmax 130vmax,
+        80vmax 80vmax,
+        90vmax 90vmax,
+        110vmax 110vmax,
+        90vmax 90vmax;
+      background-position:
+        -80vmax -80vmax,
+        60vmax -30vmax,
+        10vmax 10vmax,
+        -30vmax -10vmax,
+        50vmax 50vmax;
+    }
+    25% {
+      background-size: 
+        100vmax 100vmax,
+        90vmax 90vmax,
+        100vmax 100vmax,
+        90vmax 90vmax,
+        60vmax 60vmax;
+      background-position:
+        -60vmax -90vmax,
+        50vmax -40vmax,
+        0vmax -20vmax,
+        -40vmax -20vmax,
+        40vmax 60vmax;
+    }
+    50% {
+      background-size: 
+        80vmax 80vmax,
+        110vmax 110vmax,
+        80vmax 80vmax,
+        60vmax 60vmax,
+        80vmax 80vmax;
+      background-position:
+        -50vmax -70vmax,
+        40vmax -30vmax,
+        10vmax 0vmax,
+        20vmax 10vmax,
+        30vmax 70vmax;
+    }
+    75% {
+      background-size: 
+        90vmax 90vmax,
+        90vmax 90vmax,
+        100vmax 100vmax,
+        90vmax 90vmax,
+        70vmax 70vmax;
+      background-position:
+        -50vmax -40vmax,
+        50vmax -30vmax,
+        20vmax 0vmax,
+        -10vmax 10vmax,
+        40vmax 60vmax;
+    }
+  }
 .container {
     display: grid;
     grid-template-columns: repeat(12, [col-start] 1fr);
@@ -197,7 +295,7 @@ body {
 /* Artist Popup */
 .container-artist-popup {
     position: fixed;
-    background: radial-gradient(100% 100% at 100% 0%, rgba(238, 120, 50, 0.664) 4.17%, rgba(34, 34, 34, 0.72) 71.62%, rgba(0, 0, 0, 0.72) 100%);
+    background: radial-gradient(100% 100% at 100% 0%, rgba(255, 117, 35, 0.66) 4.17%, rgba(28, 22, 22, 0.72) 71.62%, rgba(0, 0, 0, 0.69) 100%);
     height: 100vh;
     padding: 24px;
     gap: 24px;
@@ -215,7 +313,6 @@ body {
 .artist-image {
     width: 118px;
     height: 118px;
-    background: white;
     border-radius: 80px;
 }
 .artist-name {
@@ -258,7 +355,6 @@ body {
 .album-cover-sm {
     width: 36px;
     height: 36px;
-    background-color: white;
     border-radius: 4px;
 }
 .song-name > img:nth-child(2) {
@@ -283,11 +379,14 @@ body {
     width: 128px;
     height: 128px;
     border-radius: 4px;
-    background-color: white;
 }
 .album-name {
     /* font-weight: 600px; */
     margin-top: 8px;
+    overflow: hidden;
+    max-width: 12ch;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 .album-year {
     color: #C8C8C8;
@@ -300,7 +399,7 @@ a {
     display: inline-block;
 }
 body {
-    background-color: transparent;
+    /* background-color: transparent; */
     color: #fff;
     margin: 0 auto;
     /* margin-top: 50px; */
