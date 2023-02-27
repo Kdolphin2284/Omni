@@ -62,10 +62,21 @@ function openArtistSpotify() {
 }
 
 function buildGraph(originalArtist, artists, existingGraph) {
+    let artist = {id: originalArtist.name, uri: originalArtist.uri, image: originalArtist.images[0].url, uuid: originalArtist.id, original: true, rad: EXPANDED_NODE_SIZE};
     var graphObj = existingGraph || {
-        nodes: [{id: originalArtist.name, uri: originalArtist.uri, image: originalArtist.images[0].url, uuid: originalArtist.id, original: true, rad: EXPANDED_NODE_SIZE}],
+        nodes: [artist],
         links: []
     };
+    SELECTED_ARTIST = originalArtist.name;
+    $(".artistImg").css("background-image", "url(\"" + artist.image + "\")");
+    lastArtist = artist;
+    getArtistTopTracks(artist.uuid);
+    getArtistAlbums(artist.uuid);
+    $("#selected_artist_modal_name").html(artist.id);
+    $("#modal_artist_name").html(artist.id);
+    $("#modal_artist_image").attr("src", artist.image);
+    SELECTED_NODE = artist;
+    //showModal(, d.x, d.y);
     graphObj = artists.reduce(function(accum, artist) {
         // var nodeObj = {id: artist.name, uri: artist.uri, image: artist.images[0].url, uuid: artist.id, original: false, rad: EXPANDED_NODE_SIZE / 2};
         var nodeObj = {id: artist.name, uri: artist.uri, image: artist.images[0].url, uuid: artist.id, original: false, rad: 62.5};
@@ -101,14 +112,21 @@ function getArtistTopTracks(artistId) {
       });
 }
 
-function loadArtistAlbums(artistId) {
+function loadArtistAlbums(artistId, group="album") {
     return $.ajax({
-        url: `https://api.spotify.com/v1/artists/${artistId}/albums?market=ES&include_groups=album`
+        url: `https://api.spotify.com/v1/artists/${artistId}/albums?market=ES&include_groups=${group}`
     });
 }
 
 function getArtistAlbums(artistId) {
     return $.when(loadArtistAlbums(artistId)).then(function(data, textStatus, jqXHR) {
+        console.log(data);
+        updateModalWithAlbumData(data);
+    });
+}
+
+function getArtistEPs(artistId) {
+    return $.when(loadArtistAlbums(artistId, "single")).then(function(data, textStatus, jqXHR) {
         console.log(data);
         updateModalWithAlbumData(data);
     });
@@ -253,13 +271,17 @@ function animateGraphToCenter(x, y) {
 var currentGraphPosition = [0,0];
 var targetGraphCenter = [0,0];
 var startGraphPosition = [0,0];
+var lastArtist = null;
+
 function showModal(artist, x, y) {
+    lastArtist = artist;
     if(artist.original){
         animateGraphToCenter(defaultMiddleX, defaultMiddleY);
     }
     else{
         animateGraphToCenter(chartWidth * 7.8 / 10, defaultMiddleY / 1.4);
     }
+    
     // modalRight();
     getArtistTopTracks(artist.uuid);
     getArtistAlbums(artist.uuid);
@@ -378,6 +400,7 @@ function drawGraph(graph){
         .attr("height", 128)
         .attr("xlink:href", artist.image)
         .attr("preserveAspectRatio", "none");
+     
     }
 
 
@@ -389,6 +412,7 @@ function drawGraph(graph){
         .append("circle")
         .attr("r", function (d) {return getSizeOfNode(d);})
         .style("fill", function(d) {return "url(#" + d.uuid + ")"})
+        .style("z-index", function(d) {return 55})
         .on("mouseover", function(d) {
             d.hovered = true;
             d3.select(this).transition().duration(200)
@@ -420,6 +444,7 @@ function drawGraph(graph){
             SELECTED_ARTIST = d.id;
             animationTick = 0;
             startPosition = [d.x, d.y];
+            $(".artistImg").css("background-image", "url(\"" + d.image + "\")");
             // visuify();
             // $("#query").val(d.id);
             // div.transition()
@@ -666,10 +691,13 @@ let navContainer = document.getElementById('nav-container-id');
 
 function modalRight() {
     $(".container-artist-popup").addClass("container-artist-selected");
+    $(".blurBackground").css("filter", "blur(2px)");
+
 }
 
 function modalGone() {
     $(".container-artist-popup").removeClass("container-artist-selected");
+    $(".blurBackground").css("filter", "blur(0px)");
 }
 // const $bg = document.querySelector(".background");
 // const mouseScale = 0.25;

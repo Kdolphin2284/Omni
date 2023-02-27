@@ -120,11 +120,11 @@ $milliseconds = intval(microtime(true) * 1000);
         <div class="container-secondary flex-column">
             <h2 class="h2-title">Discography</h2>
             <div class="flex-horizontal-16">
-                <button onclick="myFunction()" class="btn">
+                <button onclick="getArtistAlbums(lastArtist.uuid)" class="btn">
                     <img src="images/album.svg" class="icon">
                     <span>Albums</span>
                 </button>
-                <button onclick="myFunction()" class="btn">
+                <button onclick="getArtistEPs(lastArtist.uuid)" class="btn">
                     <img src="images/music.svg" class="icon">
                     <span>Singles & EPs</span>
                 </button>
@@ -253,10 +253,17 @@ $milliseconds = intval(microtime(true) * 1000);
 
     <!-- <a id="uri"></a> -->
     <h2 id="message"></h2>
-    <svg id="chart">
-        <!-- <div id="blur"></div> -->
-    </svg>
+    <div class="blurBackground">
+        <svg id="chart">
+        </svg>
+    </div>
+
     <div id="modal">
+        <div class="artistWrapper">
+            <div class="artistImg">
+            </div>
+        </div>
+
         <div class='button' onclick="modalRight()"><img class="icon" src="images/artistInfoIcon.svg" alt="Artist Info Icon" /><span id="selected_artist_modal_name">Name</span></div>
         <div id="extra-kids">
             <div class="modal-flex">
@@ -298,5 +305,9 @@ $milliseconds = intval(microtime(true) * 1000);
     <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.4/lodash.min.js"></script>
     <script src="https://d3js.org/d3.v4.min.js"></script>
     <script src="main.js?version=<?php echo $milliseconds;?>"></script>
+    <!-- <script src="ui.js"></script> -->
+    <!-- <script> -->
+<!--  -->
+        <!-- </script> -->
 </body>
 </html>

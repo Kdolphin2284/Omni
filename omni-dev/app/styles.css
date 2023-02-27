@@ -507,6 +507,26 @@ svg {
     right: 0;
 }
 
+.artistWrapper {
+    height: 0;
+    width: 0;
+    margin-bottom: 2vh;
+}
+
+.artistImg {
+    width: 205px;
+    height: 205px;
+    border-radius: 1000px;
+    position: absolute;
+    z-index: 55;
+    background-color: black;
+    top: -213px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-size: cover;
+    border: 3px solid white;
+}
+
 #modal {
     /* background-color: white; */
     /* width: 200px; */
@@ -516,7 +536,18 @@ svg {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    z-index: 100;
+    text-align: center;
 }
+
+.blurBackground {
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 50;
+    filter: blur(0px);
+}
+
     .modal-flex {
     display: flex;
     justify-content: center;
@@ -603,6 +634,7 @@ div.tooltip {
     border: 0px;
     border-radius: 5px;
     pointer-events: none;
+    z-index: 500;
 }
 #home-element-2 input {
     height: 40px;
