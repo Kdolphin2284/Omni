@@ -36,7 +36,7 @@ $milliseconds = intval(microtime(true) * 1000);
         <div class="artist-basic-info flex-column">
             <img src="#" alt="" class="artist-image" id="modal_artist_image">
             <h4 class="artist-name" id="modal_artist_name">Artist Name</h4>
-            <div class="flex-horizontal-16">
+            <!-- <div class="flex-horizontal-16">
                 <button onclick="myFunction()" class="btn">
                     <img src="images/overview.svg" class="icon">
                     <span>Overview</span>
@@ -45,7 +45,7 @@ $milliseconds = intval(microtime(true) * 1000);
                     <img src="images/user.svg" class="icon">
                     <span>About</span>
                 </button>
-            </div>
+            </div> -->
         </div>
         <div class="artist-popular-songs container-secondary flex-column">
             <h2 class="h2-title">Popular Songs</h2>
@@ -128,10 +128,10 @@ $milliseconds = intval(microtime(true) * 1000);
                     <img src="images/music.svg" class="icon">
                     <span>Singles & EPs</span>
                 </button>
-                <button onclick="myFunction()" class="btn">
+                <!-- <button onclick="myFunction()" class="btn">
                     <img src="images/playlist.svg" class="icon">
                     <span>Playlists</span>
-                </button>
+                </button> -->
             </div>
             <div id="album-container" class="container-albums">
                 <div class="album flex-column">
@@ -264,7 +264,7 @@ $milliseconds = intval(microtime(true) * 1000);
             </div>
         </div>
 
-        <div class='button' onclick="modalRight()"><img class="icon" src="images/artistInfoIcon.svg" alt="Artist Info Icon" /><span id="selected_artist_modal_name">Name</span></div>
+        <div id="artistNameButton" class='button' onclick="modalRight()"><img class="icon" src="images/artistInfoIcon.svg" alt="Artist Info Icon" /><span id="selected_artist_modal_name">Name</span></div>
         <div id="extra-kids">
             <div class="modal-flex">
                 <div onmouseover="showInfluencesToolTip()" onmouseout="closeInfluencesToolTip()" id="influencesButtonOuterNodes" class='button'><img class="icon" src="images/artistInfluencesIcon.svg" alt="Artist Info Icon"><p>Influences</p></div>
