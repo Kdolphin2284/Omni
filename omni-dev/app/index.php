@@ -267,17 +267,17 @@ $milliseconds = intval(microtime(true) * 1000);
         <div class='button' onclick="modalRight()"><img class="icon" src="images/artistInfoIcon.svg" alt="Artist Info Icon" /><span id="selected_artist_modal_name">Name</span></div>
         <div id="extra-kids">
             <div class="modal-flex">
-                <div onmouseover="showInfluencesToolTip()" onmouseout="closeInfluencesToolTip()" id="influencesButtonOuterNodes" class='button'><img class="icon" src="images/artistInfluencesIcon.svg" alt="Artist Info Icon"><p>Influences</p></div>
+                <div onclick="visuifyInfluences()" onmouseover="showInfluencesToolTip()" onmouseout="closeInfluencesToolTip()" id="influencesButtonOuterNodes" class='button'><img class="icon" src="images/artistInfluencesIcon.svg" alt="Artist Info Icon"><p>Influences</p></div>
                 <div id="influencesToolTip">
                     <p class="toolTipText">Explore the artists who influenced this artist<p/>
                 </div>
                 <!-- <img src="images/artistArrowLeft.png" alt="Artist Info Icon"> -->
-                <div onmouseover="showSimilarToolTip()" onmouseout="closeSimilarToolTip()" id="similarButtonOuterNodes" class='button'><img class="icon" src="images/similarArtistIcon.svg" alt="Artist Info Icon"><p>Similar Artists</p></div>
+                <div onclick="visuifySimilar()" onmouseover="showSimilarToolTip()" onmouseout="closeSimilarToolTip()" id="similarButtonOuterNodes" class='button'><img class="icon" src="images/similarArtistIcon.svg" alt="Artist Info Icon"><p>Similar Artists</p></div>
                 <div id="similarToolTip">
                     <p class="toolTipText">Explore the artists who are similar to this artist<p/>
                 </div>
                 <!-- <img src="images/artistArrowRight.png" alt="Artist Info Icon"> -->
-                <div onmouseover="showInfluencedToolTip()" onmouseout="closeInfluencedToolTip()" id="influencedButtonOuterNodes" class='button'><img class="icon" src="images/influencedArtistIcon.svg" alt="Artist Info Icon"><p>Influenced</p></div>
+                <div onclick="visuifyInfluenced()" onmouseover="showInfluencedToolTip()" onmouseout="closeInfluencedToolTip()" id="influencedButtonOuterNodes" class='button'><img class="icon" src="images/influencedArtistIcon.svg" alt="Artist Info Icon"><p>Influenced</p></div>
                 <div id="influencedToolTip">
                     <p class="toolTipText">Explore the artists who were influenced by this artist<p/>
                 </div>
@@ -285,15 +285,15 @@ $milliseconds = intval(microtime(true) * 1000);
         </div>
         <div id="original-artist-extra-kids">
             <div class="modal-flex">
-                <div onmouseover="showOriginalInfluencesToolTip()" onmouseout="closeOriginalInfluencesToolTip()" id="originalInfluences" class='button'><img class="icon" src="images/artistInfluencesIcon.svg" alt="Artist Info Icon"></div>
+                <div onclick="visuifyInfluences()" onmouseover="showOriginalInfluencesToolTip()" onmouseout="closeOriginalInfluencesToolTip()" id="originalInfluences" class='button'><img class="icon" src="images/artistInfluencesIcon.svg" alt="Artist Info Icon"></div>
                 <div id="originalInfluencesToolTip">
                     <p class="toolTipText">Explore the artists who influenced this artist<p/>
                 </div>
-                <div onmouseover="showOriginalSimilarToolTip()" onmouseout="closeOriginalSimilarToolTip()" id="originalSimilar" class='button'><img class="icon" src="images/similarArtistIcon.svg" alt="Artist Info Icon"></div>
+                <div onclick="visuifySimilar()"onmouseover="showOriginalSimilarToolTip()" onmouseout="closeOriginalSimilarToolTip()" id="originalSimilar" class='button'><img class="icon" src="images/similarArtistIcon.svg" alt="Artist Info Icon"></div>
                 <div id="originalSimilarToolTip">
                     <p class="toolTipText">Explore the artists who are similar to this artist<p/>
                 </div>
-                <div onmouseover="showOriginalInfluencedToolTip()" onmouseout="closeOriginalInfluencedToolTip()" id="originalInfluenced" class='button'><img class="icon" src="images/influencedArtistIcon.svg" alt="Artist Info Icon"></div>
+                <div onclick="visuifyInfluenced()" onmouseover="showOriginalInfluencedToolTip()" onmouseout="closeOriginalInfluencedToolTip()" id="originalInfluenced" class='button'><img class="icon" src="images/influencedArtistIcon.svg" alt="Artist Info Icon"></div>
                 <div id="originalInfluencedToolTip">
                     <p class="toolTipText">Explore the artists who were influenced by this artist<p/>
                 </div>
