@@ -298,7 +298,7 @@ function buildSongEntry(element) {
         <img src="${element['album']['images'][0]['url']}" alt="${element['album']['name']}" class="album-cover-sm">
         <div class="song-name">
             <p>${element['name']}</p>
-            <p class="explicit">${element['explicit'] === true ? " (E)" : ""}</p>
+            ${element['explicit'] === true ? "<img class='explicit' src='images/explicit.svg' alt='(E)'> " : ""}
         </div>
     </div>
     <div>

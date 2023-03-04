@@ -6,16 +6,18 @@ $milliseconds = intval(microtime(true) * 1000);
 ?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Omni App</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css" />
-    <link rel="stylesheet" href="styles.css?version=<?php echo $milliseconds;?>">
+    <link rel="stylesheet" href="styles.css?version=<?php echo $milliseconds; ?>">
 </head>
+
 <body>
     <!-- <header class="navigation"> -->
-      <!-- <a href="/">Omni</a> -->
+    <!-- <a href="/">Omni</a> -->
     <!-- </header> -->
     <!-- <a href="/" id="home-element-1">
         <h1 id="OmniLogo">Omni</h1>
@@ -128,10 +130,10 @@ $milliseconds = intval(microtime(true) * 1000);
                     <img src="images/music.svg" class="icon">
                     <span>Singles & EPs</span>
                 </button>
-                <button onclick="myFunction()" class="btn">
+                <!-- <button onclick="myFunction()" class="btn">
                     <img src="images/playlist.svg" class="icon">
                     <span>Playlists</span>
-                </button>
+                </button> -->
             </div>
             <div id="album-container" class="container-albums">
                 <div class="album flex-column">
@@ -164,10 +166,10 @@ $milliseconds = intval(microtime(true) * 1000);
     </div>
     <div class="container">
         <div class="nav-container" id="nav-container-id">
-        <!-- <img src="images/logo-lg.svg" alt="logo"> -->
+            <!-- <img src="images/logo-lg.svg" alt="logo"> -->
             <div class="nav-content">
                 <div class="user-button">
-                    
+
                     <div class="dropdown">
                         <button onclick="myFunction()" class="btn dropbtn">
                             <img class="icon" src="images/spotify.svg">
@@ -207,7 +209,7 @@ $milliseconds = intval(microtime(true) * 1000);
             </div>
             <div class="container-secondary flex-column" id="top-artists">
                 <div>
-                    <h2 class="h2-title">Your top artists</h2>   
+                    <h2 class="h2-title">Your top artists</h2>
                     <div class="dropdown">
                         <button onclick="myFunction()" class="btn dropbtn">
                             <span>Last 30 Days</span>
@@ -264,22 +266,31 @@ $milliseconds = intval(microtime(true) * 1000);
             </div>
         </div>
 
-        <div class='button' onclick="modalRight()"><img class="icon" src="images/artistInfoIcon.svg" alt="Artist Info Icon" /><span id="selected_artist_modal_name">Name</span></div>
+        <div id="artistNameButton" class='button' onclick="modalRight()"><img class="icon" src="images/artistInfoIcon.svg" alt="Artist Info Icon" /><span id="selected_artist_modal_name">Name</span></div>
         <div id="extra-kids">
             <div class="modal-flex">
-                <div onclick="visuifyInfluences()" onmouseover="showInfluencesToolTip()" onmouseout="closeInfluencesToolTip()" id="influencesButtonOuterNodes" class='button'><img class="icon" src="images/artistInfluencesIcon.svg" alt="Artist Info Icon"><p>Influences</p></div>
+                <div onclick="visuifyInfluences()" onmouseover="showInfluencesToolTip()" onmouseout="closeInfluencesToolTip()" id="influencesButtonOuterNodes" class='button'><img class="icon" src="images/artistInfluencesIcon.svg" alt="Artist Info Icon">
+                    <p>Influences</p>
+                </div>
                 <div id="influencesToolTip">
-                    <p class="toolTipText">Explore the artists who influenced this artist<p/>
+                    <p class="toolTipText">Explore the artists who influenced this artist
+                        <p />
                 </div>
                 <!-- <img src="images/artistArrowLeft.png" alt="Artist Info Icon"> -->
-                <div onclick="visuifySimilar()" onmouseover="showSimilarToolTip()" onmouseout="closeSimilarToolTip()" id="similarButtonOuterNodes" class='button'><img class="icon" src="images/similarArtistIcon.svg" alt="Artist Info Icon"><p>Similar Artists</p></div>
+                <div onclick="visuifySimilar()" onmouseover="showSimilarToolTip()" onmouseout="closeSimilarToolTip()" id="similarButtonOuterNodes" class='button'><img class="icon" src="images/similarArtistIcon.svg" alt="Artist Info Icon">
+                    <p>Similar Artists</p>
+                </div>
                 <div id="similarToolTip">
-                    <p class="toolTipText">Explore the artists who are similar to this artist<p/>
+                    <p class="toolTipText">Explore the artists who are similar to this artist
+                        <p />
                 </div>
                 <!-- <img src="images/artistArrowRight.png" alt="Artist Info Icon"> -->
-                <div onclick="visuifyInfluenced()" onmouseover="showInfluencedToolTip()" onmouseout="closeInfluencedToolTip()" id="influencedButtonOuterNodes" class='button'><img class="icon" src="images/influencedArtistIcon.svg" alt="Artist Info Icon"><p>Influenced</p></div>
+                <div onclick="visuifyInfluenced()" onmouseover="showInfluencedToolTip()" onmouseout="closeInfluencedToolTip()" id="influencedButtonOuterNodes" class='button'><img class="icon" src="images/influencedArtistIcon.svg" alt="Artist Info Icon">
+                    <p>Influenced</p>
+                </div>
                 <div id="influencedToolTip">
-                    <p class="toolTipText">Explore the artists who were influenced by this artist<p/>
+                    <p class="toolTipText">Explore the artists who were influenced by this artist
+                        <p />
                 </div>
             </div>
         </div>
@@ -287,27 +298,31 @@ $milliseconds = intval(microtime(true) * 1000);
             <div class="modal-flex">
                 <div onclick="visuifyInfluences()" onmouseover="showOriginalInfluencesToolTip()" onmouseout="closeOriginalInfluencesToolTip()" id="originalInfluences" class='button'><img class="icon" src="images/artistInfluencesIcon.svg" alt="Artist Info Icon"></div>
                 <div id="originalInfluencesToolTip">
-                    <p class="toolTipText">Explore the artists who influenced this artist<p/>
+                    <p class="toolTipText">Explore the artists who influenced this artist
+                        <p />
                 </div>
-                <div onclick="visuifySimilar()"onmouseover="showOriginalSimilarToolTip()" onmouseout="closeOriginalSimilarToolTip()" id="originalSimilar" class='button'><img class="icon" src="images/similarArtistIcon.svg" alt="Artist Info Icon"></div>
+                <div onclick="visuifySimilar()" onmouseover="showOriginalSimilarToolTip()" onmouseout="closeOriginalSimilarToolTip()" id="originalSimilar" class='button'><img class="icon" src="images/similarArtistIcon.svg" alt="Artist Info Icon"></div>
                 <div id="originalSimilarToolTip">
-                    <p class="toolTipText">Explore the artists who are similar to this artist<p/>
+                    <p class="toolTipText">Explore the artists who are similar to this artist
+                        <p />
                 </div>
                 <div onclick="visuifyInfluenced()" onmouseover="showOriginalInfluencedToolTip()" onmouseout="closeOriginalInfluencedToolTip()" id="originalInfluenced" class='button'><img class="icon" src="images/influencedArtistIcon.svg" alt="Artist Info Icon"></div>
                 <div id="originalInfluencedToolTip">
-                    <p class="toolTipText">Explore the artists who were influenced by this artist<p/>
+                    <p class="toolTipText">Explore the artists who were influenced by this artist
+                        <p />
                 </div>
             </div>
         </div>
-    </div> 
+    </div>
 
-    <script src="https://code.jquery.com/jquery-3.1.1.min.js" ></script>
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.4/lodash.min.js"></script>
     <script src="https://d3js.org/d3.v4.min.js"></script>
-    <script src="main.js?version=<?php echo $milliseconds;?>"></script>
+    <script src="main.js?version=<?php echo $milliseconds; ?>"></script>
     <!-- <script src="ui.js"></script> -->
     <!-- <script> -->
-<!--  -->
-        <!-- </script> -->
+    <!--  -->
+    <!-- </script> -->
 </body>
+
 </html>
