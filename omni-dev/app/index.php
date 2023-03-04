@@ -38,7 +38,7 @@ $milliseconds = intval(microtime(true) * 1000);
         <div class="artist-basic-info flex-column">
             <img src="#" alt="" class="artist-image" id="modal_artist_image">
             <h4 class="artist-name" id="modal_artist_name">Artist Name</h4>
-            <div class="flex-horizontal-16">
+            <!-- <div class="flex-horizontal-16">
                 <button onclick="myFunction()" class="btn">
                     <img src="images/overview.svg" class="icon">
                     <span>Overview</span>
@@ -47,7 +47,7 @@ $milliseconds = intval(microtime(true) * 1000);
                     <img src="images/user.svg" class="icon">
                     <span>About</span>
                 </button>
-            </div>
+            </div> -->
         </div>
         <div class="artist-popular-songs container-secondary flex-column">
             <h2 class="h2-title">Popular Songs</h2>
