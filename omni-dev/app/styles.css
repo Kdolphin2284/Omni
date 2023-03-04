@@ -691,15 +691,6 @@ svg:not(:root) {
 }
 
 
-
-/* DISPLAY NONE OF ELEMENTS AFTER SEARCH */
-
-/* .content-main.flex-column .container-secondary.flex-column, #home-element-2 {
-    display: none;
-} */
-
-/* WEEK 4 HOMEWORK */
-
 #uri {
     position: absolute;
     top: 160px;
@@ -947,4 +938,8 @@ html {
 
 .modal-flex .active {
     filter: invert(100%);
+}
+#selected_artist_modal_name {
+    font-size: 20px;
+    font-weight: 700;
 }
