@@ -10,6 +10,8 @@ function stringGen(len) {
 let MY_AUTH_TOKEN = "";
 let SELECTED_ARTIST = "";
 let SELECTED_NODE;
+let maxArtists = 8;
+
 
 /**
  * Artist Name Modal: #modal_artist_name
@@ -44,6 +46,124 @@ window.onload = function (w) {
         }
     });
 };
+
+function spotifyRequest(endpoint, parameters = {}) {
+    const url = `https://api.spotify.com/v1/${endpoint}?${$.param(parameters)}`;
+    return new Promise((resolve, reject) => {
+      $.ajax({
+        url: url,
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        success: function (data) {
+          resolve(data);
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+          reject(errorThrown);
+        },
+      });
+    });
+  }
+
+
+function getRelatedArtistsPromise(artistId) {
+    return spotifyRequest(`artists/${artistId}/related-artists`).then((data) => data['artists']);
+}
+
+function getArtistPromise(artistId) {
+    return spotifyRequest(`artists/${artistId}`)
+}
+
+
+function getOldestAlbumPromise(artist, limit = 50) {
+    function handleAlbumsSuccess(data) {
+      if (data.items.length > 0) return data.items[data.items.length - 1];
+      else throw new Error("No albums found");
+    }
+  
+    let parameters = {
+      limit: limit,
+    };
+  
+    return spotifyRequest(`artists/${artist.id}/albums`, parameters).then((data) => {
+      artist.albums = data.items;
+      if (data.total <= limit) return handleAlbumsSuccess(data)
+      return spotifyRequest(`artists/${artist.id}/albums`, {...parameters, offset: data.total - limit}).then(handleAlbumsSuccess);
+    });
+  }
+
+  const defaultArtistDataFormatting = (artist) => ({
+    external_urls: artist.external_urls,
+    followers: artist.followers.total,
+    genres: artist.genres,
+    href: artist.href,
+    images: artist.images,
+    name: artist.name,
+    oldestAlbum: artist.oldestAlbum,
+    popularity: artist.popularity,
+    uri: artist.uri,
+    albums: artist.albums,
+    id: artist.id
+  });
+  
+  function getRelationalData(artistId, reformatArtistData = defaultArtistDataFormatting) {
+    let oldestAlbum;
+    let relatedArtists;
+    let influences = [];
+    let influenced = [];
+  
+    const parseReleaseDate = (releaseDate) => new Date(releaseDate)
+    const reformatList = (list) => list.map(reformatArtistData)
+    const handlePromiseComplete = () => ({influences: reformatList(influences), influenced: reformatList(influenced)})
+    const handleRelatedAlbumsSuccess = (albums) => Promise.all(albums.map((album, index) => getOldestAlbumPromise(relatedArtists[index]).catch(() => null)))
+    const handleRelatedArtistsSuccess = (data) => relatedArtists = data
+  
+    // if both artists have no albums, we will be considered the influencer OF the relatedArtist. (We influenced the related artist.)
+    // This is a arbitrary choice, we could reasonably add another response field of "neither" to house cases like this
+    function handleOldestRelatedAlbumSuccess(data, relatedArtist) {
+      relatedArtist.oldestAlbum = data;
+      influenced.push(relatedArtist);
+      if (data !== null && (oldestAlbum === null || parseReleaseDate(data['release_date']) < parseReleaseDate(oldestAlbum['release_date']))) // wow this is awful(ly good)
+        influences.push(influenced.pop())
+    }
+    function handleOldestAlbumSuccess (data) {
+      oldestAlbum = data;
+      return getRelatedArtistsPromise(artistId);
+    }
+    function handleOldestRelatedAlbumsSuccess(albums) {
+      albums.forEach((album, index) => handleOldestRelatedAlbumSuccess(album, relatedArtists[index])) // parse data into influenced or influences
+      return handlePromiseComplete();
+    }
+  
+    return getOldestAlbumPromise({id: artistId}).catch(() => null)
+      .then(handleOldestAlbumSuccess)
+      .then(handleRelatedArtistsSuccess)
+      .then(handleRelatedAlbumsSuccess)
+      .then(handleOldestRelatedAlbumsSuccess)
+      .catch((e) => {throw e});
+  }
+
+function getInfluences(artist) {
+    $("#uri").attr("href", artist.uri).text(artist.name);
+    let artistId = artist.id;
+    return getRelationalData(artistId).then((data) => {
+        if(data.influences.length > maxArtists) {
+            return data.influences.slice(0, maxArtists);
+        }
+        return data.influences;
+    })
+}
+function getInfluenced(artist) {
+    $("#uri").attr("href", artist.uri).text(artist.name);
+    let artistId = artist.id;
+    return getRelationalData(artistId).then((data) => {
+            if(data.influenced.length > maxArtists) {
+                return data.influenced.slice(0, maxArtists);
+            }
+            return data.influenced;
+    })
+}
 
 
 function addToGraph(graphObj, artist, nodeObj, linkObj) {
@@ -197,7 +317,6 @@ function getRelatedArtists(artistId) {
 }
 
 function getFirstDegreeArtists(response) {
-    let maxArtists = 8;
     if (!response.artists.items.length){
         $("#message").text("¯\\_(ツ)_/¯ Can't find that artist - try again.");
     }
@@ -229,6 +348,58 @@ function getFirstDegreeArtists(response) {
 
 //     return $.when.apply(null, deferreds);
 // }
+
+function visuifyInfluenced(){
+    let artistId = SELECTED_NODE['uuid'];
+    $("svg").empty();
+    $("#message").empty();
+    $("#uri").empty();
+
+    getArtistPromise(artistId).then(artist => {
+        return getInfluenced(artist)
+        .then(influenced => buildGraph(artist, influenced));
+    }).then(drawGraph);
+    $("#originalInfluences").removeClass("active");
+    $("#originalSimilar").removeClass("active");
+    $("#originalInfluenced").addClass("active");
+}
+
+function visuifyInfluences(){
+    let artistId = SELECTED_NODE['uuid'];
+    $("svg").empty();
+    $("#message").empty();
+    $("#uri").empty();
+
+    getArtistPromise(artistId).then(artist => {
+        return getInfluences(artist)
+        .then(influences => buildGraph(artist, influences));
+    }).then(drawGraph);
+    $("#originalInfluences").addClass("active");
+    $("#originalSimilar").removeClass("active");
+    $("#originalInfluenced").removeClass("active");
+}
+
+function visuifySimilar() {
+    let artistId = SELECTED_NODE['uuid'];
+    $("svg").empty();
+    $("#message").empty();
+    $("#uri").empty();
+    let maxArtists = 8;
+
+    getArtistPromise(artistId).then(artist => {
+        return getRelatedArtistsPromise(artistId)
+        .then(related => {
+            if(related.length > maxArtists){
+                return buildGraph(artist, related.splice(0, maxArtists))
+            }
+            return buildGraph(artist, related)
+        });
+    }).then(drawGraph);
+    $("#originalInfluences").removeClass("active");
+    $("#originalSimilar").addClass("active");
+    $("#originalInfluenced").removeClass("active");
+}
+
 
 function buildFirstGraph(originalArtist, firstDegreeArtists) {
     return $.when(buildGraph(originalArtist, firstDegreeArtists), firstDegreeArtists);
@@ -388,6 +559,7 @@ function drawGraph(graph){
 
     var pattern = svg.append('svg:defs');
     for(let artist of graph.nodes) {
+        console.log(artist);
         pattern.append("svg:pattern")
         .attr("id", artist.uuid)
         .attr("width", 1)
@@ -684,6 +856,9 @@ $("#submit").on("click", function(e) {
     visuify();
     // OmniLogoPlacement();
     searchTriggersNone();
+    $("#originalInfluences").removeClass("active");
+    $("#originalSimilar").addClass("active");
+    $("#originalInfluenced").removeClass("active");
 });
 
 let navContainer = document.getElementById('nav-container-id');
