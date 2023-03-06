@@ -302,6 +302,7 @@ function buildSongEntry(element) {
         </div>
     </div>
     <div>
+        
         <p>${millisToMinutesAndSeconds(element['duration_ms'])}</p>
     </div>
 </div>`;

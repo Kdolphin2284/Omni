@@ -80,7 +80,7 @@ body {
       -30vmax -10vmax,
       50vmax 50vmax;
     background-repeat: no-repeat;
-    /* animation: 20s movement linear infinite; */
+    animation: 20s movement linear infinite;
     overflow-y: hidden;
      
   }
@@ -98,7 +98,7 @@ body {
     /* -webkit-backdrop-filter: blur(10px); */
   }
   
-  /* @keyframes movement {
+  @keyframes movement {
     0%, 100% {
       background-size: 
         130vmax 130vmax,
@@ -155,7 +155,7 @@ body {
         -10vmax 10vmax,
         40vmax 60vmax;
     }
-  } */
+  }
 .container {
     display: grid;
     grid-template-columns: repeat(12, [col-start] 1fr);
@@ -326,10 +326,7 @@ body {
 .container-artists-songs {
     margin: 0 -8px;
 }
-.explicit {
-    height: 14px;
-    width: 14px;
-}
+
 .artist-song {
     align-items: center;
     /* height: 52px; */
@@ -360,15 +357,11 @@ body {
     height: 36px;
     border-radius: 4px;
 }
-.song-name {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-    height: 37px;
-}
 .song-name > img:nth-child(2) {
     width: 14px;
+    background-color: white;
     height: 14px;
+    border-radius: 4px;
 }
 /* Discography */
 .container-albums {
@@ -377,7 +370,6 @@ body {
     overflow-x: scroll;
     /* height: 206px; */
     padding-bottom: 16px;
-    margin-bottom: 24px;
 }
 .album {
     gap: 8px;
@@ -600,7 +592,7 @@ svg {
   /* styles.css | https://omnimusic.co/omni-dev/app/styles.css?version=1675642269890 */
   
   .modal-flex {
-    margin-top: 8px;
+    margin-top: 20px;
   }
   
 
@@ -692,6 +684,14 @@ svg:not(:root) {
 
 
 
+/* DISPLAY NONE OF ELEMENTS AFTER SEARCH */
+
+/* .content-main.flex-column .container-secondary.flex-column, #home-element-2 {
+    display: none;
+} */
+
+/* WEEK 4 HOMEWORK */
+
 #uri {
     position: absolute;
     top: 160px;
@@ -762,7 +762,6 @@ html {
     max-width: 32ch;
     text-overflow: ellipsis;
     white-space: nowrap;
-    line-height: 16px;
 }
 #nav-container-id {
     z-index: 20000;
@@ -910,10 +909,6 @@ html {
 .btn, .button {
     transition: .2s all ease-in-out;
 }
-#artistNameButton {
-    margin-top: -12px;
-}
-
 /* .nodes circle {
     transition: .5s ease-in-out;
 } */
