@@ -121,10 +121,6 @@ $milliseconds = intval(microtime(true) * 1000);
                     <img src="images/music.svg" class="icon">
                     <span>Singles & EPs</span>
                 </button>
-                <button onclick="myFunction()" class="btn">
-                    <img src="images/playlist.svg" class="icon">
-                    <span>Playlists</span>
-                </button>
             </div>
             <div id="album-container" class="container-albums">
                 <div class="album flex-column">
@@ -257,7 +253,7 @@ $milliseconds = intval(microtime(true) * 1000);
             </div>
         </div>
 
-        <div class='button' onclick="modalRight()"><img class="icon" src="images/artistInfoIcon.svg" alt="Artist Info Icon" /><span id="selected_artist_modal_name">Name</span></div>
+        <div id="artistNameButton" class='button' onclick="modalRight()"><img class="icon" src="images/artistInfoIcon.svg" alt="Artist Info Icon" /><span id="selected_artist_modal_name">Name</span></div>
         <div id="extra-kids">
             <div class="modal-flex">
                 <div onclick="visuifyInfluences()" onmouseover="showInfluencesToolTip()" onmouseout="closeInfluencesToolTip()" id="influencesButtonOuterNodes" class='button'><img class="icon" src="images/artistInfluencesIcon.svg" alt="Artist Info Icon"><p>Influences</p></div>

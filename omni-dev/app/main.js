@@ -279,7 +279,7 @@ function updateModalWithTrackData(data) {
     let count = 0;
     for(const element of tracks) {
         songHtmls.push(buildSongEntry(element));
-        if(count++ == 4) break;
+        if(count++ == 6) break;
     }
     let songList = songHtmls.join("\n");
     $("#song_list_modal_parent").html(songList);
@@ -450,7 +450,8 @@ function showModal(artist, x, y) {
         animateGraphToCenter(defaultMiddleX, defaultMiddleY);
     }
     else{
-        animateGraphToCenter(chartWidth * 7.8 / 10, defaultMiddleY / 1.4);
+        // animateGraphToCenter(chartWidth * 7.8 / 10, defaultMiddleY / 1.4);
+        animateGraphToCenter(chartWidth * 2.2 / 10, defaultMiddleY / 1);
     }
     
     // modalRight();
