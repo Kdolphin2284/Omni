@@ -23,6 +23,11 @@ $milliseconds = intval(microtime(true) * 1000);
 
     <!-- THIS IS WHERE IT STARTS -->
     <a href="https://omnimusic.co/omni-dev/app/" id="homepageLink"></a>
+    <div id="previous-search" onclick="visuifyPreviousArtist()">
+        <img class="icon" src="images/down-med.svg">
+        <div id="previous-artist-image"></div>
+        <p id="previous-search-text">Previous Search</p>
+    </div>
     <div class="container-artist-popup flex-column">
         <div class="flex-between">
             <button onclick="modalGone()" id="closeModal" class="btn">
@@ -157,18 +162,18 @@ $milliseconds = intval(microtime(true) * 1000);
             <div class="nav-content">
                 <div class="user-button">
                     
-                    <div class="dropdown">
-                        <button onclick="myFunction()" class="btn dropbtn">
+                    <a id="user-name-link" class="dropdown" href="#" target="_blank">
+                        <button onclick="" class="btn dropbtn">
                             <img class="icon" src="images/spotify.svg">
-                            <span>aidanty23</span>
+                            <span id="spotifyDisplayName">aidanty23</span>
                             <img class="icon" src="images/down-med.svg">
                         </button>
                         <!-- <div id="myDropdown" class="dropdown-content">
                             <a href="#">Link 1</a>
                         </div> -->
-                    </div>
+                    </a>
                 </div>
-                <button onclick="myFunction()" class="btn dropbtn">
+                <button onclick="" class="btn dropbtn">
                     <img class="icon" src="images/help.svg" alt="">
                 </button>
             </div>
@@ -181,11 +186,11 @@ $milliseconds = intval(microtime(true) * 1000);
                 </div>
                 <form id="home-element-2">
                     <img src="images/dark-search-md.svg" alt="search">
-                    <input type="text" id="query" placeholder="Search for an artist to discover similar artists">
+                    <input type="text" id="query" placeholder="Search for any artist">
                     <button id="submit">Draw Graph</button>
                 </form>
             </div>
-            <div class="container-secondary flex-column" id="recently-played">
+            <!-- <div class="container-secondary flex-column" id="recently-played">
                 <h2 class="h2-title">Recently played</h2>
                 <div class="artist-grid">
                     <button class="btn">
@@ -193,12 +198,12 @@ $milliseconds = intval(microtime(true) * 1000);
                         <p class="artistButtonText">The Weeknd</p>
                     </button>
                 </div>
-            </div>
+            </div> -->
             <div class="container-secondary flex-column" id="top-artists">
                 <div>
                     <h2 class="h2-title">Your top artists</h2>   
                     <div class="dropdown">
-                        <button onclick="myFunction()" class="btn dropbtn">
+                        <button onclick="" class="btn dropbtn">
                             <span>Last 30 Days</span>
                             <img class="icon" src="images/down-med.svg">
                         </button>
@@ -207,7 +212,7 @@ $milliseconds = intval(microtime(true) * 1000);
                         </div> -->
                     </div>
                 </div>
-                <div class="container-top-artists">
+                <div id="top-artist-info" class="container-top-artists">
                     <button class="btn-artist flex-column">
                         <img src="#" alt="" class="img-placeholder-lg">
                         <p class="artistButtonText">Nas</p>

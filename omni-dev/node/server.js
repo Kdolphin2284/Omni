@@ -8,10 +8,13 @@ const fs = require('fs');
 const SPOTIFY_SCOPES = ['user-read-private',
     'user-read-email',
     'playlist-read-private',
+    'user-top-read',
+    'user-read-recently-played',
     'playlist-read-collaborative',
     'playlist-modify-private',
     'playlist-modify-public',
-    'user-library-read', 'user-library-modify'];
+    'user-library-read', 
+    'user-library-modify'];
 const SPOTIFY_REDIRECT_URI = 'https://api.omnimusic.co/callback';
 const SPOTIFY_CLIENT_ID = '595ee53ede324126adcb3e2118c5ef7b';
 const SPOTIFY_STATE = 'some-state-of-my-choice';

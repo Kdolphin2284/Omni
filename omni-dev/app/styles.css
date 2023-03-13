@@ -80,7 +80,7 @@ body {
       -30vmax -10vmax,
       50vmax 50vmax;
     background-repeat: no-repeat;
-    /* animation: 20s movement linear infinite; */
+    animation: 20s movement linear infinite;
     overflow-y: hidden;
      
   }
@@ -98,7 +98,7 @@ body {
     /* -webkit-backdrop-filter: blur(10px); */
   }
   
-  /* @keyframes movement {
+  @keyframes movement {
     0%, 100% {
       background-size: 
         130vmax 130vmax,
@@ -155,7 +155,7 @@ body {
         -10vmax 10vmax,
         40vmax 60vmax;
     }
-  } */
+  }
 .container {
     display: grid;
     grid-template-columns: repeat(12, [col-start] 1fr);
@@ -395,6 +395,7 @@ body {
     max-width: 12ch;
     text-overflow: ellipsis;
     white-space: nowrap;
+    color: #fff;
 }
 .album-year {
     color: #C8C8C8;
@@ -771,6 +772,7 @@ html {
     text-overflow: ellipsis;
     white-space: nowrap;
     line-height: 16px;
+    color: #fff;
 }
 #nav-container-id {
     z-index: 20000;
@@ -947,4 +949,74 @@ html {
 
 .modal-flex .active {
     filter: invert(100%);
+}
+#selected_artist_modal_name {
+    font-size: 20px;
+    font-weight: 700;
+}
+#top-artist-info {
+    position: relative;
+    z-index: 10000;
+}
+.btn-artist.flex-column img {
+    border-radius: 100px;
+}
+#top-artist-info .homeArtistNode:last-child button {
+    padding-right: 0px;
+}
+.home-hidden-uuid {
+    display: none;
+}
+#top-artists > div:first-child {
+    display: flex;
+    justify-content: space-between;
+    z-index: 10000;
+}
+#original-artist-extra-kids {
+    max-width: 180px;
+    margin-left: auto;
+    margin-right: auto;
+}
+#top-artists .dropdown button {
+    padding-left: 20px;
+}
+#previous-search {
+    display: none;
+    background: #282828;
+    color: #fff;
+    width: fit-content;
+    position: absolute;
+    top: 115px;
+    left: 50px;
+    z-index: 10000;
+    cursor: pointer;
+    padding: 10px;
+    justify-content: center;
+    align-items: center;
+    border-radius: 100px;
+    transition: .2s all ease-in-out;
+}
+#previous-search:hover {
+    background: #494949;
+}
+#previous-search:active  {
+    background: #fff;
+}
+#previous-search:active p  {
+    color: #000;
+}
+
+#previous-artist-image img {
+    width: 30px;
+    height: 30px;
+    border-radius: 50px;
+} 
+#previous-artist-image {
+    height: 30px;
+    width: 30px;
+    margin-right: 10px;
+}
+#previous-search > img:first-child {
+    transform: rotate(90deg);
+    margin-right: 2px;
 }

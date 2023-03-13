@@ -13,6 +13,19 @@ let SELECTED_NODE;
 let maxArtists = 8;
 
 
+let HISTORY = [];
+
+let searchedArtist = "";
+let searchArtistName = "";
+let searchArtistImage = "";
+let previousArtist = "";
+let previousArtistName = "";
+let previousArtistImage = "";
+
+let previousSearchButton = document.getElementById('previous-search');
+let previousSearchText = document.getElementById('previous-search-text');
+let previousSearchImage = document.getElementById('previous-artist-image');
+
 /**
  * Artist Name Modal: #modal_artist_name
  * Artist Image Modal: #modal_artist_image
@@ -43,6 +56,9 @@ window.onload = function (w) {
                    xhr.setRequestHeader("Authorization","Bearer " + MY_AUTH_TOKEN);        
                 }
             });
+            getUserTopArtist();
+            getUserSpotifyInformation()
+            // getUserSpotifyInfo();
         }
     });
 };
@@ -74,6 +90,109 @@ function getRelatedArtistsPromise(artistId) {
 function getArtistPromise(artistId) {
     return spotifyRequest(`artists/${artistId}`)
 }
+
+// Kyle User Artist Data Work
+function getUserTopArtist() {
+    return spotifyRequest(`me/top/artists`).then(function(data, textStatus, jqXHR) {
+        console.log(data);
+        updateHomeWithUserData(data);
+    });
+}
+
+function updateHomeWithUserData(data) {
+    if (data.items.length > 10) {
+        data.items.length = 5;
+    }
+    let userArtistData = data['items'];
+    let userArtistHtmls = [];
+    for(const element of userArtistData) {
+        userArtistHtmls.push(buildUserInfoHTML(element));
+    }
+    let userArtistList = userArtistHtmls.join("\n");
+    $("#top-artist-info").html(userArtistList);
+}
+
+function buildUserInfoHTML(element) {
+    let html = 
+    `
+    <div class="homeArtistNode">
+        <button id="${element['id']}_home_button" class="btn-artist flex-column" onClick="visuifyHomeSimilar('${element['id']}');">
+            <img src="${element['images'][0]['url']}" alt="" class="album-cover-lg">
+        </button>
+        <p class="album-name">${element['name']}</p>
+    </div>`;
+    
+
+    // `
+    // <a href="${element['uri']}" target="_blank">
+    //     <button class="btn-artist flex-column">
+    //         <img src="${element['images'][0]['url']}" alt="" class="album-cover-lg">
+    //     </button>
+    //     <p class="album-name">${element['name']}</p>
+    //     <p id="${element['name']}_HomeIdentifier">${element['id']}</p>
+    // </a>`;
+
+    return html;
+}
+
+// Kyle User Data Work
+function getUserSpotifyInformation() {
+    return spotifyRequest(`me`).then(function(data, textStatus, jqXHR) {
+        // Logs JSON data
+        console.log(data);
+
+        // Grabs display_name from JSON
+        let userDisplayName = data['display_name'];
+        console.log(userDisplayName); 
+
+        // Change HTML text of spotify display name element
+        let spotifyDisplayName = document.getElementById('spotifyDisplayName');
+        spotifyDisplayName.innerHTML = userDisplayName;
+
+        // Change HTML a tag href on spotify display name element
+        let userProfileLink = data['uri'];
+        let spotifyUsernameLink = document.getElementById('user-name-link');
+        spotifyUsernameLink.href = userProfileLink;
+    });
+}
+
+// function getUserSpotifySpecificInformation(data) {
+//     let userDisplayName = data['display_name'];
+//     console.log(userDisplayName); 
+// }
+
+
+// function getUserSpotifyInfo() {
+//     return spotifyRequest(`me`).then(function(data, textStatus, jqXHR) {
+//         console.log(data);
+//         updateUserLink(data);
+//     });
+// }
+
+// function updateUserLink(data) {
+//     let userSpotifyData = data['items'];
+//     let userInfoHtmls = [];
+//     for(const element of userSpotifyData) {
+//         userInfoHtmls.push(buildUserSpotifyInfoHTML(element));
+//     }
+//     let userSpotifyInfoList = userInfoHtmls.join("\n");
+//     $("#user-name-link").html(userSpotifyInfoList);
+// }
+
+// function buildUserSpotifyInfoHTML(element) {
+//     let html = 
+//     `
+//     <a href="${element['uri']}" target="_blank">
+//         <button onclick="myFunction()" class="btn dropbtn">
+//             <img class="icon" src="images/spotify.svg">
+//                 <span>${userSpotifyData}</span>
+//             <img class="icon" src="images/down-med.svg">
+//         </button>
+//     </a>`;
+    
+//     return html;
+// }
+
 
 
 function getOldestAlbumPromise(artist, limit = 50) {
@@ -181,14 +300,37 @@ function openArtistSpotify() {
     window.open(SELECTED_NODE['uri'], '_blank');
 }
 
+
+function buildSearchHistory() {
+    if(HISTORY.length > 1){
+        $("#previous-search").css("display", "flex");
+        let last = HISTORY[HISTORY.length - 2];
+        let name = last.name;
+        let uuid = last.uuid;
+        let image = last.image;
+        $("#previous-artist-image").html(`<img src="${image}"/>`);
+        $("#previous-search-text").html(name);
+    }
+    else{
+        $("#previous-search").css("display", "none");
+    }
+
+}
+
 function buildGraph(originalArtist, artists, existingGraph) {
     let artist = {id: originalArtist.name, uri: originalArtist.uri, image: originalArtist.images[0].url, uuid: originalArtist.id, original: true, rad: EXPANDED_NODE_SIZE};
+    if((HISTORY.length > 0 && HISTORY[HISTORY.length - 1].name !== originalArtist.name) || HISTORY.length === 0){
+        HISTORY.push(buildHistoryItem(artist));            
+    }
+    buildSearchHistory();
     var graphObj = existingGraph || {
         nodes: [artist],
         links: []
     };
     SELECTED_ARTIST = originalArtist.name;
-    $(".artistImg").css("background-image", "url(\"" + artist.image + "\")");
+    $(".artistImg").css("background-image", `url(${artist.image})`);
+    // $(".artistImg").css("background-image", "url(" + artist.image + ")");
+    // $(".artistImg").css("background-image", "url(\"" + artist.image + "\")");
     lastArtist = artist;
     getArtistTopTracks(artist.uuid);
     getArtistAlbums(artist.uuid);
@@ -254,11 +396,11 @@ function getArtistEPs(artistId) {
 
 function buildAlbumHTML(element) {
     let html = `
-    <div class="album flex-column">
+    <a href="${element['uri']}" target="_blank" class="album flex-column">
         <img src="${element['images'][0]['url']}" alt="" class="album-cover-lg">
         <p class="album-name">${element['name'].substring(0,33)}</p>
         <p class="album-year">${element['release_date'].substring(0,4)}</p>
-    </div>`;
+    </a>`;
     return html;
 }
 
@@ -293,7 +435,7 @@ function millisToMinutesAndSeconds(millis) {
   }
 
 function buildSongEntry(element) {
-    let htmlFiller = `<div class="artist-song flex-between">
+    let htmlFiller = `<a href="${element['uri']}" target="_blank" class="artist-song flex-between">
     <div>
         <img src="${element['album']['images'][0]['url']}" alt="${element['album']['name']}" class="album-cover-sm">
         <div class="song-name">
@@ -305,7 +447,7 @@ function buildSongEntry(element) {
         
         <p>${millisToMinutesAndSeconds(element['duration_ms'])}</p>
     </div>
-</div>`;
+</a>`;
     return htmlFiller;
 }
 
@@ -328,8 +470,72 @@ function getFirstDegreeArtists(response) {
             if(response.artists.length > maxArtists){
                 response.artists = response.artists.slice(0,maxArtists);
             }
+
+            if(searchedArtist === ""){
+                searchedArtist = artist.id;
+                searchArtistName = artist.name;
+                // searchArtistImage = artist.image;
+                console.log('The initially searched artist is: ' + searchArtistName);
+            } else {
+                previousArtist = searchedArtist;
+                previousArtistName = searchArtistName;
+                searchedArtist = artist.id;
+                searchArtistName = artist.name;
+                // searchArtistImage = artist.image;
+                console.log('The searched artist is: ' + searchArtistName);
+                console.log('The previously searched artist is: ' + previousArtistName);
+
+                    //make displayed
+                    previousSearchButton.style.display = "flex";
+
+                    // fill with info
+                    previousSearchText.innerHTML = previousArtistName;
+            }
+
+            // let searchedArtist = "";
+            // let searchArtistName = "";
+            // let searchArtistImage = "";
+            // let previousArtist = "";
+            // let previousArtistName = "";
+            // let previousArtistImage = "";
+
+            // if(!previousArtist) {
+            //     previousArtist = searchedArtist;
+            // }
+
+            // let previousArtist = searchedArtist;
+
+            // if(previousArtist.isEmpty()) {
+            //     console.log('The artist that was searched originally is: ' + searchedArtist);
+            // } else {
+            //     console.log('The artist that was just searched is: ' + searchedArtist);
+            //     console.log('The previously searched artist is: ' + previousArtist);
+            // }
+            
+            // Grab Searched Artist
+            // if(searchedArtist === "") {
+            //     let searchedArtist = artist.id;
+            //     // let searchedArtist = response.artists['0']['id'];
+            //     console.log('The artist that was searched originally is: ' + searchedArtist);
+            // } else {
+            //     let previousArtist = searchedArtist;
+            //     let searchedArtist = artist.id;
+            //     // let searchedArtist = response.artists['0']['id'];
+            //     console.log('The previous artist was: ' + previousArtist);
+            //     console.log('The most recently searched artist is: ' + searchedArtist);
+            // }
+
+            // if(searchedArtist === null) {
+            //     let searchedArtist = artists[0]['id'];
+            //     console.log(searchedArtist);
+            // } else {
+            //     let searchedArtist = previousArtist;
+            //     console.log(previousArtist)
+            // }
+
             console.log(response.artists);
-            return response.artists; 
+            return response.artists;
+
         }));
 }
 
@@ -350,11 +556,20 @@ function getFirstDegreeArtists(response) {
 //     return $.when.apply(null, deferreds);
 // }
 
+function buildHistoryItem(node) {
+    return {uuid: node['uuid'], name: node['id'], image: node.image};
+}
+
 function visuifyInfluenced(){
     let artistId = SELECTED_NODE['uuid'];
     $("svg").empty();
     $("#message").empty();
     $("#uri").empty();
+    //uuid, id = name()
+
+
+
+    console.log(SELECTED_NODE);
 
     getArtistPromise(artistId).then(artist => {
         return getInfluenced(artist)
@@ -371,6 +586,7 @@ function visuifyInfluences(){
     $("#message").empty();
     $("#uri").empty();
 
+
     getArtistPromise(artistId).then(artist => {
         return getInfluences(artist)
         .then(influences => buildGraph(artist, influences));
@@ -385,6 +601,8 @@ function visuifySimilar() {
     $("svg").empty();
     $("#message").empty();
     $("#uri").empty();
+
+
     let maxArtists = 8;
 
     getArtistPromise(artistId).then(artist => {
@@ -400,7 +618,6 @@ function visuifySimilar() {
     $("#originalSimilar").addClass("active");
     $("#originalInfluenced").removeClass("active");
 }
-
 
 function buildFirstGraph(originalArtist, firstDegreeArtists) {
     return $.when(buildGraph(originalArtist, firstDegreeArtists), firstDegreeArtists);
@@ -451,7 +668,7 @@ function showModal(artist, x, y) {
     }
     else{
         // animateGraphToCenter(chartWidth * 7.8 / 10, defaultMiddleY / 1.4);
-        animateGraphToCenter(chartWidth * 2.2 / 10, defaultMiddleY / 1);
+        animateGraphToCenter(chartWidth * 2.3 / 10, defaultMiddleY / .85);
     }
     
     // modalRight();
@@ -584,7 +801,10 @@ function drawGraph(graph){
         .enter()
         .append("circle")
         .attr("r", function (d) {return getSizeOfNode(d);})
+        // .style("background-image", function(d) {return "url(\"" + d.image + "\")"})
+        // .style("fill", function(d) {return "url(#" + d.image + ")"})
         .style("fill", function(d) {return "url(#" + d.uuid + ")"})
+        // .style("fill", function(d) {return "url(#" + d.uuid + ")"})
         .style("z-index", function(d) {return 55})
         .on("mouseover", function(d) {
             d.hovered = true;
@@ -800,7 +1020,6 @@ function OmniLogoPlacement() {
 const homeContent = document.getElementById('search-triggers-none');
 const homeElement2 = document.getElementById('home-element-2');
 const homeElement2Input = document.getElementById('query');
-const recentlyPlayed = document.getElementById('recently-played');
 const topArtists = document.getElementById('top-artists');
 const homepageLink = document.getElementById('homepageLink');
 const chart = document.getElementById('chart');
@@ -820,10 +1039,9 @@ function searchTriggersNone() {
     query.style.margin = '0';
     query.style.height = '32px';
     query.style.borderRadius = '100px';
-    recentlyPlayed.style.display = 'none';
     topArtists.style.display = 'none';
     logo.style.position = 'absolute';
-    logo.style.top = '48px';
+    logo.style.top = '55px';
     logo.style.left = '48px';
     logo.style.height = '32px';
     logoImg.style.height = 'inherit';
@@ -835,6 +1053,7 @@ function visuify(){
     $("svg").empty();
     $("#message").empty();
     $("#uri").empty();
+    
     getArtist($("#query").val())
         .then(getFirstDegreeArtists)
         .then(buildFirstGraph)
@@ -843,6 +1062,55 @@ function visuify(){
         .then(drawGraph);
 }
 
+function visuifyHomeSimilar(artistIdentifier) {
+    let artistId = artistIdentifier;
+    searchTriggersNone();
+    $("svg").empty();
+    $("#message").empty();
+    $("#uri").empty();
+    let maxArtists = 8;
+
+    getArtistPromise(artistId).then(artist => {
+        return getRelatedArtistsPromise(artistId)
+        .then(related => {
+            if(related.length > maxArtists){
+                return buildGraph(artist, related.splice(0, maxArtists))
+            }
+            return buildGraph(artist, related)
+        });
+    }).then(drawGraph);
+    $("#originalInfluences").removeClass("active");
+    $("#originalSimilar").addClass("active");
+    $("#originalInfluenced").removeClass("active");
+}
+
+
+function visuifyPreviousArtist() {
+    let artistId = HISTORY[HISTORY.length - 2].uuid;
+    HISTORY.pop();
+    buildSearchHistory();
+    if(HISTORY.length === 0){
+        previousSearchButton.style.display = "none";
+    }
+    searchTriggersNone();
+    $("svg").empty();
+    $("#message").empty();
+    $("#uri").empty();
+    let maxArtists = 8;
+
+    getArtistPromise(artistId).then(artist => {
+        return getRelatedArtistsPromise(artistId)
+        .then(related => {
+            if(related.length > maxArtists){
+                return buildGraph(artist, related.splice(0, maxArtists))
+            }
+            return buildGraph(artist, related)
+        });
+    }).then(drawGraph);
+    $("#originalInfluences").removeClass("active");
+    $("#originalSimilar").addClass("active");
+    $("#originalInfluenced").removeClass("active");
+}
 // function visuifyFromNode(){
 //     $("svg").empty();
 //     $("#message").empty();
